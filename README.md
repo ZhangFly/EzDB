@@ -8,6 +8,8 @@ YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对�
 
 * 你也可以下载 [zip](http://git.oschina.net/SmallHuang/YFeiDB/repository/archive/master) 导入工程。 
 
+* 为了使用该模块你还需要自己添加JDBC驱动，[./lib/](http://git.oschina.net/SmallHuang/YFeiDB/tree/master/lib) 目录下提供了 MySQL 驱动。
+
 ## Examples
 
 使用YFeiDB模块需要经过一下几个步骤：
