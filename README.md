@@ -66,15 +66,15 @@ final List<Student> students1 = YFeiDB.find(Student.class, new Where("$1>$c", 1)
 ```java
 // t 将会替换为表名 Student，$C 将会替换为可变参数的值 1
 // sql: SELECT * FROM Student WHERE Student.id>'1';
-YFeiDB.find(Student.class, new Where("t.id>$c", 1))；
+YFeiDB.find(Student.class, new Where("t.id>$c", 1));
 
 // t 将会替换为表名 Student, $1 将会替换为Student的第一个非忽略属性对应的列名 id，$C 将会替换为可变参数的值 1
 // sql: SELECT * FROM Student WHERE Student.id>'1';
-YFeiDB.find(Student.class, new Where("t.$1>$c", 1))；
+YFeiDB.find(Student.class, new Where("t.$1>$c", 1));
 
 // $1 将会替换为表名 Student + "." + 第一个非忽略属性对应的列名 id，$C 将会替换为可变参数的值 1
 // sql: SELECT * FROM Student WHERE Student.id>'1';
-YFeiDB.find(Student.class, new Where("$1>$c", 1))；
+YFeiDB.find(Student.class, new Where("$1>$c", 1));
 ```
 
 保存操作：
