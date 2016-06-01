@@ -37,14 +37,15 @@ class Column {
 		this.field = field;
 	}
 
-	public String toString() {
-		return String.format("{name=%s, filed=%s}", name, field == null ? "null" : field.toString());
-	}
-
 	public boolean equals(final Column columnInfo) {
 		if (columnInfo == null) {
 			return false;
 		}
 		return this.getName().equals(columnInfo.getName());
+	}
+
+	@Override
+	public String toString() {
+		return String.format("{name=%s, filed=%s}", name, field == null ? "null" : field.toString());
 	}
 }

@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import ZFly.ReflectTableStrategy.ReflectTableObserver;
 import ZFly.ReverseTableStrategy.ReserseTableDelegate;
 
@@ -21,142 +24,251 @@ import ZFly.ReverseTableStrategy.ReserseTableDelegate;
  */
 public class YFeiDB {
 
-	private static YFeiDBConfig config;
-	private static SimpleConnectionPool pool;
-	private static Map<String, Table> tables = new HashMap<String, Table>();
-
 	/**
-	 * @Description 初始化数据库连接，此方法必须在使用该模版前调用 ，且仅需调用一次 若连接失败则无法执行后续操作，如
-	 *              YFeiDB.conn(new YFeiDBConfig()
-	 *              .setDataBase("MySQL")
-	 *              .setUrl(
-	 *              "jdbc:mysql://121.42.151.185:3306/sh?characterEncoding=utf8")
-	 *              .setUserName("root")
-	 *              .setPassWord("123456"));
+	 * 模块配置
 	 */
-	public static void conn(final YFeiDBConfig config) {
-		try {
-			/* 彩蛋一枚，致我最爱的小黄君，哈哈！！ */
-			if (config.getDataBase().toLowerCase().equals("yfei")) {
-				System.out.println("call me 小黄君！！最爱小黄君！！");
-			}
-			/* 加载数据库驱动 */
-			if (config.getDataBase().toLowerCase().equals("mysql")) {
-				Class.forName("com.mysql.jdbc.Driver");
-			}
-			/* 初始化连接池 */
-			YFeiDB.pool = new SimpleConnectionPool(config.getPoolSize(), config.getUrl(), config.getUserName(),
-					config.getPassWord());
-			YFeiDB.config = config;
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+	private static YFeiDBConfig config;
+	/**
+	 * 简单数据库连接池
+	 */
+	private static SimpleConnectionPool pool;
+	/**
+	 * 已反射生成的表信息
+	 */
+	private static Map<String, Table> tables = new HashMap<String, Table>();
+	/**
+	 * log4j
+	 */
+	private static Logger log = Logger.getLogger(YFeiDB.class);
+
+	// 初始化log4j配置
+	static {
+		PropertyConfigurator.configure("log4j.properties");
+	}
+
+	// 屏蔽构造函数
+	private YFeiDB() {
 
 	}
 
+	/**
+	 *
+	 * 初始化数据库连接，此方法必须在使用该模版前调用 ，且仅需调用一次 若连接失败则无法执行后续操作，如
+	 * YFeiDB.conn(new YFeiDBConfig()
+	 * .setDataBase("MySQL")
+	 * .setUrl("jdbc:mysql://121.42.151.185:3306/sh?characterEncoding=utf8")
+	 * .setUserName("root")
+	 * .setPassWord("123456"));
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static void conn(final YFeiDBConfig config) throws ClassNotFoundException, SQLException {
+		if (config == null) {
+			throw new NullPointerException("YFeiDBConfig must be not null!!");
+		}
+		/* 彩蛋一枚，致我最爱的小黄君，哈哈！！ */
+		if (config.getDataBase().equalsIgnoreCase("yfei")) {
+			System.out.println("call me 小黄君！！最爱小黄君！！");
+		}
+		/* 加载数据库驱动 */
+		if (config.getDataBase().equalsIgnoreCase("mysql")) {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		/* 初始化连接池 */
+		YFeiDB.pool = new SimpleConnectionPool(config.getPoolSize(), config.getUrl(), config.getUserName(),
+				config.getPassWord());
+		YFeiDB.config = config;
+	}
+
+	/**
+	 * 查询实体类对应的所有数据库表记录
+	 * 
+	 * @param clazz
+	 *            实体类
+	 * @return 所有数据库记录
+	 * @throws SQLException
+	 */
 	public static <T> List<T> find(Class<T> clazz) {
+		loadTableInfoFromClass(clazz);
 		return find(clazz, null);
 	}
 
+	/**
+	 * 查询指定主键的实体类对应的数据库表记录
+	 * 
+	 * @param clazz
+	 *            实体类
+	 * @param id
+	 *            主键
+	 * @return 数据库记录
+	 * @throws SQLException
+	 */
 	public static <T> T find(Class<T> clazz, final int id) {
 		loadTableInfoFromClass(clazz);
 		return find(clazz, Where.shrotcutForId(id, getTableInfoForClass(clazz))).get(0);
 	}
 
+	/**
+	 * 查询指定条件的实体类对应的数据库表记录
+	 * 
+	 * @param clazz
+	 *            实体类
+	 * @param id
+	 *            主键
+	 * @return 数据库记录
+	 * @throws SQLException
+	 */
 	public static <T> List<T> find(Class<T> clazz, final Where condition) {
+		loadTableInfoFromClass(clazz);
+		final String sql = makeSQL(clazz, condition, new SQLFindBuilder());
+		final ResultSet res = excuteSql(sql);
+		final List<Column> columns = getTableInfoForClass(clazz).getColumns();
+		final List<T> resList = new ArrayList<T>();
+		final ReverseTableStrategy reverse = new ReverseTableImpl1(new ReserseTableDelegate() {
+
+			@Override
+			public int getFieldCount() {
+				return columns.size();
+			}
+
+			@Override
+			public Field getField(int position) {
+				return columns.get(position).getField();
+			}
+
+			@Override
+			public Object getFieldVale(int position) {
+				try {
+					return res.getObject(columns.get(position).getName());
+				} catch (SQLException e) {
+					log.error("Column was not mathed Class.Field<columns.get(position).getName()>");
+					return null;
+				}
+			}
+
+		});
 		try {
-			final String sql = makeGeneralSql(clazz, condition, new SQLFindBuilder());
-			final ResultSet res = excuteSql(sql, true);
-			final List<Column> columns = getTableInfoForClass(clazz).getColumns();
-			final List<T> resList = new ArrayList<T>();
-			final ReverseTableStrategy reverse = new ReverseTableImpl1(new ReserseTableDelegate() {
-
-				@Override
-				public int getFieldCount() {
-					return columns.size();
-				}
-
-				@Override
-				public Field getField(int position) {
-					return columns.get(position).getField();
-				}
-
-				@Override
-				public Object getFieldVale(int position) {
-					try {
-						return res.getObject(columns.get(position).getName());
-					} catch (SQLException e) {
-						e.printStackTrace();
-						return null;
-					}
-				}
-
-			});
 			while (res.next()) {
 				resList.add(reverse.excute(clazz));
+				res.close();
 			}
-			return resList;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			log.error(e.getStackTrace());
 		}
+		return resList;
 	}
 
-	public static <T> void save(final T entity) {
-		final String sql = makeGeneralSql(entity, null, new SQLSaveBuilder());
-		excuteSql(sql, false);
+	/**
+	 * 将实体类保存到数据库，如果实体类不对应数据库操作则忽略
+	 * 
+	 * @param entity
+	 *            实体类
+	 * @throws SQLException
+	 */
+	public static void save(final Object entity) {
+		loadTableInfoFromClass(entity.getClass());
+		final String sql = makeSQL(entity, null, new SQLSaveBuilder());
+		excuteSql(sql);
 	}
 
-	public static <T> void update(final T entity) {
+	/**
+	 * 更新实体类对应的数据库表，实体类的主键将用来作为指定条件
+	 * 
+	 * @param entity
+	 *            实体类
+	 * @throws SQLException
+	 */
+	public static void update(final Object entity) {
 		loadTableInfoFromClass(entity.getClass());
 		update(entity, Where.shrotcutForId(entity, getTableInfoForClass(entity.getClass())));
 	}
 
-	public static <T> void update(final T entity, final Where condition) {
-		final String sql = makeGeneralSql(entity, condition, new SQLUpdateBuilder());
-		excuteSql(sql, false);
-	}
-
-	public static <T> void delete(final T entity) {
+	/**
+	 * 更新实体类对应的数据库表，更新内容为实体类属性值，更新条件通过Where指定
+	 * 
+	 * @param entity
+	 *            实体类
+	 * @param condition
+	 *            指定条件
+	 * @throws SQLException
+	 */
+	public static void update(final Object entity, final Where condition) {
 		loadTableInfoFromClass(entity.getClass());
-		final String sql = makeGeneralSql(entity, Where.shrotcutForId(entity, getTableInfoForClass(entity.getClass())),
+		final String sql = makeSQL(entity, condition, new SQLUpdateBuilder());
+		excuteSql(sql);
+	}
+
+	/**
+	 * 删除实体类对应数据库数据，实体类的主键将用来作为指定条件
+	 * 
+	 * @param entity
+	 *            实体类
+	 * @throws SQLException
+	 */
+	public static void delete(final Object entity) {
+		loadTableInfoFromClass(entity.getClass());
+		final String sql = makeSQL(entity, Where.shrotcutForId(entity, getTableInfoForClass(entity.getClass())),
 				new SQLDeleteBuilder());
-		excuteSql(sql, false);
+		excuteSql(sql);
 	}
 
-	public static <T> void delete(Class<T> clazz, final Where condition) {
-		final String sql = makeGeneralSql(clazz, condition, new SQLDeleteBuilder());
-		excuteSql(sql, false);
+	/**
+	 * 删除实体类对应的数据库表，删除内容为实体类属性值，更新条件通过Where指定
+	 * 
+	 * @param clazz
+	 *            实体类
+	 * @param condition
+	 *            指定条件
+	 * @throws SQLException
+	 */
+	public static void delete(Class<?> clazz, final Where condition) {
+		loadTableInfoFromClass(clazz);
+		final String sql = makeSQL(clazz, condition, new SQLDeleteBuilder());
+		excuteSql(sql);
 	}
 
-	public static ResultSet excuteSql(final String sql, final boolean result) {
+	/**
+	 * 执行SQL语句操作
+	 * 
+	 * @param sql
+	 *            SQL语句
+	 * @return
+	 * @throws SQLException
+	 */
+	public static ResultSet excuteSql(final String sql) {
+
 		try {
-			if (config.isShowSql()) {
-				System.out.println(sql);
+			if (config == null) {
+				throw new NullPointerException(
+						"Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
 			}
 			final Connection conn = pool.request();
-			final Statement stat = conn.createStatement();
+			Statement stat;
+			stat = conn.createStatement();
 			ResultSet res = null;
-			if (result) {
+			if (sql.contains("SELECT")) {
 				res = stat.executeQuery(sql);
 			} else {
 				stat.execute(sql);
 			}
 			pool.release(conn);
+			if (config.isShowSql()) {
+				log.info(sql);
+			}
 			return res;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e.getStackTrace());
 			return null;
 		}
+
 	}
 
-	public static String makeGeneralSql(final Object entity, final Where condition, final SQLBuilder builder) {
+	private static String makeSQL(final Object entity, final Where condition, final SQLBuilder builder) {
 		final Table table;
 		if (entity instanceof Class) {
-			loadTableInfoFromClass((Class<?>) entity);
 			table = getTableInfoForClass((Class<?>) entity);
 		} else {
-			loadTableInfoFromClass(entity.getClass());
 			table = getTableInfoForClass(entity.getClass());
 		}
 		final StringBuilder sql = builder.getBaseBuilder(entity, table);

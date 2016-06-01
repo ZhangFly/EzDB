@@ -1,6 +1,10 @@
 package ZFly;
 
+import org.apache.log4j.Logger;
+
 class SQLUpdateBuilder implements SQLBuilder {
+
+	private static Logger log = Logger.getLogger(SQLUpdateBuilder.class);
 
 	@Override
 	public StringBuilder getBaseBuilder(Object entity, Table table) {
@@ -23,7 +27,7 @@ class SQLUpdateBuilder implements SQLBuilder {
 			sql.delete(sql.length() - 1, sql.length());
 			return sql;
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
+			log.error("Should not go to here!!");
 			return null;
 		}
 	}

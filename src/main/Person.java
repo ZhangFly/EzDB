@@ -21,11 +21,6 @@ public class Person {
 	@YFeiColumn(ignore = true)
 	private String unuse;
 
-	public String toString() {
-		return String.format("{id=%d, name=%s, age=%d, sex=%s, intr=%s, ununse=%s}", getId(), getName(), getAge(),
-				getSex(), getIntro(), getUnuse());
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -72,5 +67,11 @@ public class Person {
 
 	public void setUnuse(String unuse) {
 		this.unuse = unuse;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("{id=%d, name=%s, age=%d, sex=%s, intro=%s, ununse=%s}", getId(), getName(), getAge(),
+				getSex(), getIntro(), getUnuse());
 	}
 }

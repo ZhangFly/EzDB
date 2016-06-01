@@ -39,10 +39,6 @@ class Table {
 		return columns;
 	}
 
-	//	public Column getColumnByPosition(final int position) {
-	//		return columns.get(position);
-	//	}
-
 	public boolean isPrimaryKey(final Column columnInfo) {
 		if (primaryKey == null) {
 			return false;
@@ -50,6 +46,7 @@ class Table {
 		return primaryKey.equals(columnInfo);
 	}
 
+	@Override
 	public String toString() {
 		return String.format("{name=%s, primaryKey=%s, columns=%s}", name,
 				primaryKey == null ? "null" : primaryKey.toString(), columns == null ? "null" : columns.toString());

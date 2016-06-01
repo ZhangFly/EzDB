@@ -13,6 +13,22 @@ public class YFeiDBConfig {
 		this(null, null, null, null, 1, false);
 	}
 
+	/**
+	 * YFeiDB模块配置信息
+	 * 
+	 * @param dataBase
+	 *            数据库名称
+	 * @param url
+	 *            数据库连接地址
+	 * @param userName
+	 *            数据库用户名
+	 * @param passWord
+	 *            数据库密码
+	 * @param poolSize
+	 *            连接池大小
+	 * @param showSql
+	 *            是否显示SQL语句
+	 */
 	public YFeiDBConfig(final String dataBase, final String url, final String userName, final String passWord,
 			final int poolSize, final boolean showSql) {
 		this.dataBase = dataBase;
