@@ -10,9 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import ZFly.ReflectTableStrategy.ReflectTableObserver;
 import ZFly.ReverseTableStrategy.ReserseTableDelegate;
 
@@ -36,15 +33,6 @@ public class YFeiDB {
 	 * 已反射生成的表信息
 	 */
 	private Map<String, Table> tables = new HashMap<String, Table>();
-	/**
-	 * log4j
-	 */
-	private static Logger log = Logger.getLogger(YFeiDB.class);
-
-	// 初始化log4j配置
-	static {
-		PropertyConfigurator.configure("log4j.properties");
-	}
 
 	// 屏蔽构造函数
 	private YFeiDB() {
@@ -145,7 +133,9 @@ public class YFeiDB {
 				try {
 					return res.getObject(columns.get(position).getName());
 				} catch (SQLException e) {
-					log.error("Column was not mathed Class.Field<columns.get(position).getName()>");
+					System.err.println(
+							String.format("[%s]: Column was not mathed Class.Field<columns.get(position).getName()>",
+									this.getClass().getSimpleName()));
 					return null;
 				}
 			}
@@ -154,10 +144,10 @@ public class YFeiDB {
 		try {
 			while (res.next()) {
 				resList.add(reverse.excute(clazz));
-				res.close();
 			}
+			res.close();
 		} catch (SQLException e) {
-			log.error(e.getStackTrace());
+			System.err.println(String.format("[%s]: %s", this.getClass().getSimpleName(), e.getMessage()));
 		}
 		return resList;
 	}
@@ -240,7 +230,6 @@ public class YFeiDB {
 	 * @throws SQLException
 	 */
 	public ResultSet excuteSql(final String sql) {
-
 		try {
 			if (config == null) {
 				throw new NullPointerException(
@@ -257,11 +246,11 @@ public class YFeiDB {
 			}
 			pool.release(conn);
 			if (config.isShowSql()) {
-				log.info(sql);
+				System.out.println(String.format("[%s]: %s", this.getClass().getSimpleName(), sql));
 			}
 			return res;
 		} catch (SQLException e) {
-			log.error(e.getStackTrace());
+			System.err.println(String.format("[%s]: %s", this.getClass().getSimpleName(), e.getMessage()));
 			return null;
 		}
 
