@@ -71,7 +71,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return String.format("{id=%d, name=%s, age=%d, sex=%s, intro=%s, ununse=%s}", getId(), getName(), getAge(),
-				getSex(), getIntro(), getUnuse());
+		return String.format("{id=%d, name=\"%s\", age=%d, sex=\"%s\", intro=\"%s\", ununse=%s}", getId(), getName(),
+				getAge(), getSex(), getIntro(), getUnuse());
 	}
 }
