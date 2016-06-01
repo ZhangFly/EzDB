@@ -38,7 +38,7 @@ try{
 想要对数据库进行操作，你还需要建立数据库对应的实体类：
 
 ```java
-@YFeiTable("Student") // 设置实体类对应表名，如果不设置自动生成的表名为类名的小写(student)
+YFeiTable("Student") // 设置实体类对应表名，如果不设置自动生成的表名为类名的小写(student)
 public class Student {
 
 	@YFeiColumn(primaryKey = true) // 声明该属性为主键
