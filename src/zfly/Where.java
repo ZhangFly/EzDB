@@ -23,7 +23,7 @@ import com.sun.istack.internal.NotNull;
  */
 public class Where {
 
-	final public static Where NULL = new Where("");
+	final public static Where EMPTY = new Where("");
 	final private static Logger log = Logger.getLogger(Where.class);
 
 	private String sql;
@@ -70,7 +70,7 @@ public class Where {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
-				return Where.NULL;
+				return Where.EMPTY;
 			}
 
 			primaryKey.getField().setAccessible(true);
@@ -82,7 +82,7 @@ public class Where {
 
 		} catch (IllegalAccessException e) {
 			log.error(e.getMessage());
-			return Where.NULL;
+			return Where.EMPTY;
 		}
 	}
 
@@ -90,7 +90,7 @@ public class Where {
 
 		final Column primaryKey = table.getPrimaryKey();
 		if (primaryKey == null) {
-			return Where.NULL;
+			return Where.EMPTY;
 		}
 
 		return new Where(table.getName() + "." + primaryKey.getName() + "=$c", id);

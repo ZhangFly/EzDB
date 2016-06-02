@@ -1,6 +1,6 @@
 package zfly;
 
-public class YFeiDBConfig {
+public class YFeiConfig {
 
 	private String dataBase;
 	private String url;
@@ -9,7 +9,7 @@ public class YFeiDBConfig {
 	private int poolSize;
 	private boolean showSql;
 
-	public YFeiDBConfig() {
+	public YFeiConfig() {
 		this(null, null, null, null, 1, false);
 	}
 
@@ -29,7 +29,7 @@ public class YFeiDBConfig {
 	 * @param showSql
 	 *            是否显示SQL语句
 	 */
-	public YFeiDBConfig(final String dataBase, final String url, final String userName, final String passWord,
+	public YFeiConfig(final String dataBase, final String url, final String userName, final String passWord,
 			final int poolSize, final boolean showSql) {
 		this.dataBase = dataBase;
 		this.url = url;
@@ -54,7 +54,7 @@ public class YFeiDBConfig {
 	 * @param dataBase
 	 * @return
 	 */
-	public YFeiDBConfig setDataBase(String dataBase) {
+	public YFeiConfig setDataBase(String dataBase) {
 		this.dataBase = dataBase;
 		return this;
 	}
@@ -74,7 +74,7 @@ public class YFeiDBConfig {
 	 * @param url
 	 * @return
 	 */
-	public YFeiDBConfig setUrl(String url) {
+	public YFeiConfig setUrl(String url) {
 		this.url = url;
 		return this;
 	}
@@ -94,7 +94,7 @@ public class YFeiDBConfig {
 	 * @param userName
 	 * @return
 	 */
-	public YFeiDBConfig setUserName(String userName) {
+	public YFeiConfig setUserName(String userName) {
 		this.userName = userName;
 		return this;
 	}
@@ -114,7 +114,7 @@ public class YFeiDBConfig {
 	 * @param passWord
 	 * @return
 	 */
-	public YFeiDBConfig setPassWord(String passWord) {
+	public YFeiConfig setPassWord(String passWord) {
 		this.passWord = passWord;
 		return this;
 	}
@@ -134,7 +134,7 @@ public class YFeiDBConfig {
 	 * @param poolSize
 	 * @return
 	 */
-	public YFeiDBConfig setPoolSize(int poolSize) {
+	public YFeiConfig setPoolSize(int poolSize) {
 		this.poolSize = poolSize;
 		return this;
 	}
@@ -154,7 +154,7 @@ public class YFeiDBConfig {
 	 * @param showSql
 	 * @return
 	 */
-	public YFeiDBConfig setShowSql(boolean showSql) {
+	public YFeiConfig setShowSql(boolean showSql) {
 		this.showSql = showSql;
 		return this;
 	}

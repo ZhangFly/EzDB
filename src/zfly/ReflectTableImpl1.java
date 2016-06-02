@@ -2,54 +2,67 @@ package zfly;
 
 import java.lang.reflect.Field;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.sun.istack.internal.NotNull;
+
 class ReflectTableImpl1 extends ReflectTableStrategy {
 
 	@Override
-	public void excute(Class<?> clazz) {
-		notifyGotTableName(reflectTableName(clazz), clazz);
+	public void excute(@NotNull Class<?> clazz) {
+
+		reflectTableName(clazz);
+
 		for (Field f : clazz.getDeclaredFields()) {
-			final YFeiColumn additionInfo = f.getAnnotation(YFeiColumn.class);
-			if (additionInfo != null && additionInfo.ignore()) {
-				continue;
+			YFeiColumn additionInfo = null;
+			if (f.isAnnotationPresent(YFeiColumn.class)) {
+				additionInfo = f.getAnnotation(YFeiColumn.class);
+				if (additionInfo.ignore()) {
+					continue;
+				}
 			}
-			final String primaryKey = reflectPrimaryKey(additionInfo, f);
-			if (primaryKey != null) {
-				notifyGotPrimaryKey(primaryKey, f, clazz);
-			}
-			notifyGotColumnName(reflectColumnName(additionInfo, f), f, clazz);
+			reflectPrimaryKey(additionInfo, f, clazz);
+			reflectColumnName(additionInfo, f, clazz);
 		}
 	}
 
-	private String reflectTableName(final Class<?> clazz) {
-		final String tableName;
+	private void reflectTableName(@NotNull final Class<?> clazz) {
+		String tableName = StringUtils.EMPTY;
 		if (clazz.isAnnotationPresent(YFeiTable.class)) {
 			tableName = clazz.getAnnotation(YFeiTable.class).value();
 		} else {
 			tableName = clazz.getSimpleName();
 		}
-		return tableName;
+		notifyGotTableName(tableName, clazz);
 	}
 
-	private String reflectColumnName(final YFeiColumn additionInfo, final Field f) {
+	private void reflectColumnName(final YFeiColumn additionInfo, final Field f, final Class<?> clazz) {
+		String columnName = StringUtils.EMPTY;
 		if (additionInfo == null) {
-			return f.getName();
+			columnName = f.getName();
+			notifyGotColumnName(columnName, f, clazz);
+			return;
 		}
-		if (!additionInfo.alias().equals("")) {
-			return additionInfo.alias();
+		if (!StringUtils.equals(additionInfo.alias(), "")) {
+			columnName = additionInfo.alias();
+		} else {
+			columnName = f.getName();
 		}
-		return f.getName();
+		notifyGotColumnName(columnName, f, clazz);
 	}
 
-	private String reflectPrimaryKey(final YFeiColumn additionInfo, final Field f) {
+	private void reflectPrimaryKey(final YFeiColumn additionInfo, final Field f, final Class<?> clazz) {
 		if (additionInfo == null) {
-			return null;
+			return;
 		}
 		if (!additionInfo.primaryKey()) {
-			return null;
+			return;
 		}
-		if (!additionInfo.alias().equals("")) {
-			return additionInfo.alias();
+		String primaryKey = StringUtils.EMPTY;
+		if (!StringUtils.equals(additionInfo.alias(), "")) {
+			primaryKey = additionInfo.alias();
 		}
-		return f.getName();
+		primaryKey = f.getName();
+		notifyGotPrimaryKey(primaryKey, f, clazz);
 	}
 }

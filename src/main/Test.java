@@ -7,7 +7,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import zfly.Where;
 import zfly.YFeiDB;
-import zfly.YFeiDBConfig;
+import zfly.YFeiConfig;
 
 public class Test {
 
@@ -18,7 +18,7 @@ public class Test {
 		try {
 			PropertyConfigurator.configure("log4j.properties");
 
-			final YFeiDB mysql = YFeiDB.createDB(new YFeiDBConfig().setDataBase("MySQL")
+			final YFeiDB mysql = YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")
 					.setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
 					.setPassWord("123456").setPoolSize(1).setShowSql(true));
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 abstract class ReflectTableStrategy {
 
-	private List<ReflectTableObserver> observers = new ArrayList<ReflectTableObserver>();
+	protected List<ReflectTableObserver> observers = new ArrayList<>();
 
 	public interface ReflectTableObserver {
 

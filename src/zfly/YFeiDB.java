@@ -26,7 +26,7 @@ public class YFeiDB {
 
 	private static Logger log = Logger.getLogger(YFeiDB.class);
 
-	private YFeiDBConfig config;
+	private YFeiConfig config;
 	private SimpleConnectionPool pool;
 	private Map<String, Table> tables = new HashMap<>();
 
@@ -52,7 +52,7 @@ public class YFeiDB {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static YFeiDB createDB(final YFeiDBConfig config) throws ClassNotFoundException, SQLException {
+	public static YFeiDB createDB(final YFeiConfig config) throws ClassNotFoundException, SQLException {
 		if (config == null) {
 			throw new NullPointerException("YFeiDBConfig must be not null!!");
 		}
