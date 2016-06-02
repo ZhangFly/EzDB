@@ -2,6 +2,8 @@ package zfly;
 
 import java.lang.reflect.Field;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 记录实体类属性与数据库表中列的对应关系
  * 
@@ -37,11 +39,8 @@ class Column {
 		this.field = field;
 	}
 
-	public boolean equals(final Column columnInfo) {
-		if (columnInfo == null) {
-			return false;
-		}
-		return columnInfo.getField().equals(this.getField());
+	public boolean equals(final Column column) {
+		return column == null ? false : StringUtils.equals(name, column.getName());
 	}
 
 	@Override

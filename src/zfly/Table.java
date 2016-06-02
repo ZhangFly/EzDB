@@ -13,7 +13,7 @@ class Table {
 
 	private String name;
 	private Column primaryKey;
-	private List<Column> columns = new ArrayList<Column>();
+	private List<Column> columns = new ArrayList<>();
 
 	public String getName() {
 		return name;
@@ -32,18 +32,17 @@ class Table {
 	}
 
 	public void addColumn(Column column) {
-		columns.add(column);
+		if (!columns.contains(column)) {
+			columns.add(column);
+		}
 	}
 
 	public List<Column> getColumns() {
 		return columns;
 	}
 
-	public boolean isPrimaryKey(final Column columnInfo) {
-		if (primaryKey == null) {
-			return false;
-		}
-		return columnInfo.equals(primaryKey);
+	public boolean isPrimaryKey(final Column column) {
+		return primaryKey == null ? false : primaryKey.equals(column);
 	}
 
 	@Override

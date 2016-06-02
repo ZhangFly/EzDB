@@ -3,6 +3,10 @@ package zfly;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
+import com.sun.istack.internal.NotNull;
+
 /**
  * 查询条件生成类。支持 t 表名通配符；支持 $1,$2... 属性通配符；支持值通配符 $c。
  * 
@@ -19,16 +23,29 @@ import java.util.regex.Pattern;
  */
 public class Where {
 
+	final public static Where NULL = new Where("");
+	final private static Logger log = Logger.getLogger(Where.class);
+
 	private String sql;
 
-	public Where(final String fmt, final Object... args) {
+	/**
+	 * 构造限定条件
+	 * 
+	 * @param fmt
+	 *            限定条件格式
+	 * @param args
+	 *            限定条件参数
+	 */
+	public Where(@NotNull final String fmt, final Object... args) {
 		this.sql = "WHERE " + fmt;
 		for (Object arg : args) {
 			sql = sql.replaceFirst("\\$c", "'" + arg + "'");
 		}
+		// 消除SQL语句中的注释符号，防止SQL注入攻击
+		sql.replaceAll("--", "");
 	}
 
-	public String getSql(final Table table) {
+	String getSql(@NotNull final Table table) {
 
 		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
 
@@ -48,29 +65,33 @@ public class Where {
 		return sql;
 	}
 
-	public static Where shrotcutForId(final Object entity, final Table table) {
+	public static Where shrotcutForId(@NotNull final Object entity, @NotNull final Table table) {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
-				return null;
+				return Where.NULL;
 			}
+
 			primaryKey.getField().setAccessible(true);
 			if (primaryKey.getField().getType().isPrimitive()) {
 				return shrotcutForId(primaryKey.getField().getInt(entity), table);
 			} else {
 				return shrotcutForId(((Integer) primaryKey.getField().get(entity)).intValue(), table);
 			}
+
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
+			log.error(e.getMessage());
+			return Where.NULL;
 		}
 	}
 
-	public static Where shrotcutForId(final int id, final Table table) {
+	public static Where shrotcutForId(final int id, @NotNull final Table table) {
+
 		final Column primaryKey = table.getPrimaryKey();
 		if (primaryKey == null) {
-			return null;
+			return Where.NULL;
 		}
+
 		return new Where(table.getName() + "." + primaryKey.getName() + "=$c", id);
 	}
 }
