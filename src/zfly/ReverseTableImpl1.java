@@ -2,18 +2,30 @@ package zfly;
 
 import java.lang.reflect.Field;
 
+import org.apache.log4j.Logger;
+
+import com.sun.istack.internal.NotNull;
+
 class ReverseTableImpl1 extends ReverseTableStrategy {
+
+	final private static Logger log = Logger.getLogger(ReverseTableImpl1.class);
 
 	public ReverseTableImpl1(ReserseTableDelegate dataSource) {
 		this.delegate = dataSource;
 	}
 
 	@Override
-	public <T> T excute(Class<T> clazz) {
+	public <T> T excute(@NotNull Class<T> clazz) {
 		try {
 			final T entity = clazz.newInstance();
 			for (int i = 0; i < delegate.getFieldCount(); i++) {
 				final Field f = delegate.getField(i);
+
+				if (f == null) {
+					log.error("Field can not be null!!");
+					return null;
+				}
+
 				f.setAccessible(true);
 				if (f.getType().isPrimitive()) {
 					if (f.getType() == byte.class) {
@@ -37,7 +49,7 @@ class ReverseTableImpl1 extends ReverseTableStrategy {
 			}
 			return entity;
 		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return null;
 		}
 	}
