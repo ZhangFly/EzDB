@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -37,7 +38,12 @@ public class YFeiDB {
 
 	// 加载log4j配置
 	static {
-		PropertyConfigurator.configure("log4j.properties");
+		final Properties log4jProperties = new Properties();
+		log4jProperties.setProperty("log4j.rootLogger", "debug, stdout");
+		log4jProperties.setProperty("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
+		log4jProperties.setProperty("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
+		log4jProperties.setProperty("log4j.appender.stdout.layout.ConversionPattern", "%d{yyyy-MM-dd HH:mm:ss} %p [%c] %m%n");
+		PropertyConfigurator.configure(log4jProperties);
 	}
 
 	// 屏蔽构造函数

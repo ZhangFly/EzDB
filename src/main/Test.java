@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Properties;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -13,7 +15,13 @@ public class Test {
 
 	public static void main(String args[]) {
 
-		PropertyConfigurator.configure("log4j.properties");
+		final Properties log4jProperties = new Properties();
+		log4jProperties.setProperty("log4j.rootLogger", "debug, stdout");
+		log4jProperties.setProperty("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
+		log4jProperties.setProperty("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
+		log4jProperties.setProperty("log4j.appender.stdout.layout.ConversionPattern",
+				"%d{yyyy-MM-dd HH:mm:ss} %p [%c] %m%n");
+		PropertyConfigurator.configure(log4jProperties);
 
 		final YFeiDB mysql = YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")
 				.setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
