@@ -1,17 +1,15 @@
 # YFeiDB
 
-YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对实体类的反射，动态生成SQL语句；以及将数据库查询结果反射成对应JAVA实体类。
+YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对实体类的反射，动态生成SQL语句；以及将数据库查询结果反射成对应JAVA实体类。目前仅支持MySql数据库。
 
 ## Catalog
 [TOC]
 
 ## Installs
 
-* 最简单的安装方法是下载 [./lib/](http://git.oschina.net/SmallHuang/YFeiDB/tree/master/lib) 目录下的 YFeiDB.x.x.x.jar，导入工程目录下。
+* 最简单的安装方法是下载 [./](http://git.oschina.net/SmallHuang/YFeiDB/tree/master) 目录下的 YFeiDB.x.x.x.jar，导入工程目录下。
 
 * 你也可以下载 [zip](http://git.oschina.net/SmallHuang/YFeiDB/repository/archive/master) 导入工程。 
-
-* 为了使用该模块你还需要自己添加JDBC驱动，[./lib/](http://git.oschina.net/SmallHuang/YFeiDB/tree/master/lib) 目录下提供了 MySQL 驱动。
 
 ## Examples
 
