@@ -3,7 +3,7 @@
 YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对实体类的反射，动态生成SQL语句；以及将数据库查询结果反射成对应JAVA实体类。目前仅支持MySql数据库。
 
 ## Catalog
-[TOC]
+[toc]
 
 ## Installs
 
@@ -18,7 +18,6 @@ YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对�
 ###创建一个数据库对象：
 
 ```java
-try{
 	final YFeiDB mysql = YFeiDB.createDB(new YFeiDBConfig()
 				.setDataBase("MySQL")
 				.setUrl("jdbc:mysql://xxxx")
@@ -26,10 +25,6 @@ try{
 				.setPassWord("xxxx")
 				.setPoolSize(1)
 				.setShowSql(true));
-} catch (ClassNotFoundException | SQLException e) {
-	// TODO Auto-generated catch block
-}
-
 ```
 
 ###使用注解：
