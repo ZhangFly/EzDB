@@ -40,7 +40,7 @@ public class Student {
 	@YFeiColumn(alias = "nickName") // 为该属性设置数据库表别名，如果不设置自动生成为(name)
 	private String name;
 
-	@YFeiColumn(ignore = "nickName") // 该属性不对应数据库
+	@YFeiColumn(ignore = true) // 该属性不对应数据库
 	private String unuse;
 
 	// ...
