@@ -1,4 +1,4 @@
-package ZFly;
+package zfly;
 
 class SQLFindBuilder implements SQLBuilder {
 

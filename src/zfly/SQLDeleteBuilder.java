@@ -1,4 +1,4 @@
-package ZFly;
+package zfly;
 
 class SQLDeleteBuilder implements SQLBuilder {
 

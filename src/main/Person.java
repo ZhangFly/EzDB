@@ -1,7 +1,7 @@
 package main;
 
-import ZFly.YFeiColumn;
-import ZFly.YFeiTable;
+import zfly.YFeiColumn;
+import zfly.YFeiTable;
 
 @YFeiTable("person")
 public class Person {

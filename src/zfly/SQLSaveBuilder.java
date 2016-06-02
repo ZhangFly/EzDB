@@ -1,4 +1,4 @@
-package ZFly;
+package zfly;
 
 import org.apache.log4j.Logger;
 

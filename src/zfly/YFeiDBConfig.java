@@ -1,4 +1,4 @@
-package ZFly;
+package zfly;
 
 public class YFeiDBConfig {
 

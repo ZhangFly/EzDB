@@ -1,4 +1,4 @@
-package ZFly;
+package zfly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ class Table {
 		if (primaryKey == null) {
 			return false;
 		}
-		return primaryKey.equals(columnInfo);
+		return columnInfo.equals(primaryKey);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package ZFly;
+package zfly;
 
 import java.lang.reflect.Field;
 
@@ -41,7 +41,7 @@ class Column {
 		if (columnInfo == null) {
 			return false;
 		}
-		return this.getName().equals(columnInfo.getName());
+		return columnInfo.getField().equals(this.getField());
 	}
 
 	@Override
