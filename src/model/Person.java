@@ -1,4 +1,6 @@
-package main;
+package model;
+
+import org.apache.commons.lang3.StringUtils;
 
 import zfly.YFeiColumn;
 import zfly.YFeiTable;
@@ -73,5 +75,20 @@ public class Person {
 	public String toString() {
 		return String.format("{id=%d, name=\"%s\", age=%d, sex=\"%s\", intro=\"%s\", ununse=%s}", getId(), getName(),
 				getAge(), getSex(), getIntro(), getUnuse());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Person)) {
+			return false;
+		}
+
+		Person person = (Person) obj;
+
+		return id == person.id && StringUtils.equals(name, person.name) && StringUtils.equals(intro, person.intro)
+				&& age == person.age && StringUtils.equals(sex, person.sex);
 	}
 }

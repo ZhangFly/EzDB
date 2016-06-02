@@ -1,10 +1,7 @@
 package zfly;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,17 +26,16 @@ public class YFeiDB {
 	private static Logger log = Logger.getLogger(YFeiDB.class);
 
 	private YFeiConfig config;
-	private SimpleConnectionPool pool;
+	private YFeiSQLExcutor sqlExcutor;
 	private Map<String, Table> tables = new HashMap<>();
 
 	// 加载log4j配置
 	static {
 		final Properties log4jProperties = new Properties();
-		log4jProperties.setProperty("log4j.rootLogger", "debug, stdout");
+		log4jProperties.setProperty("log4j.rootLogger", "INFO, stdout");
 		log4jProperties.setProperty("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
 		log4jProperties.setProperty("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
-		log4jProperties.setProperty("log4j.appender.stdout.layout.ConversionPattern",
-				"%d{yyyy-MM-dd HH:mm:ss} %p [%c] %m%n");
+		log4jProperties.setProperty("log4j.appender.stdout.layout.ConversionPattern", "[%l] %p: %m%n");
 		PropertyConfigurator.configure(log4jProperties);
 	}
 
@@ -81,14 +77,23 @@ public class YFeiDB {
 
 		/* 初始化连接池 */
 		final YFeiDB db = new YFeiDB();
-		try {
-			db.pool = new SimpleConnectionPool(config.getPoolSize(), config.getUrl(), config.getUserName(),
-					config.getPassWord());
+		if ((db.sqlExcutor = createSQLExcutor(config)) != null) {
 			db.config = config;
-		} catch (SQLException e) {
-			log.error(e.getMessage());
 		}
 		return db;
+	}
+
+	/**
+	 * 创建一个简单SQL执行器
+	 * 
+	 * @param config
+	 * @return
+	 */
+	public static YFeiSQLExcutor createSQLExcutor(final YFeiConfig config) {
+		if (config == null) {
+			return null;
+		}
+		return new YFeiSQLExcutor(config.getPoolSize(), config.getUrl(), config.getUserName(), config.getPassWord());
 	}
 
 	/**
@@ -133,8 +138,12 @@ public class YFeiDB {
 
 		final Table table = getTableForClass(clazz);
 		final List<Column> columns = table.getColumns();
-
-		final String sql = new SQLFindBuilder().getSql(null, table, condition);
+		String sql = StringUtils.EMPTY;
+		if (condition == null) {
+			sql = new SQLFindBuilder().getSql(null, table, Where.emptyWhere());
+		} else {
+			sql = new SQLFindBuilder().getSql(null, table, condition);
+		}
 		final List<T> resList = new ArrayList<>();
 
 		excuteSql(sql, (result) -> {
@@ -248,6 +257,7 @@ public class YFeiDB {
 	 * @param sql
 	 */
 	public void excuteSql(final String sql) {
+
 		excuteSql(sql, null);
 	}
 
@@ -263,39 +273,18 @@ public class YFeiDB {
 	 */
 	public void excuteSql(final String sql, final YFeiDBExcuteSqlHandler handler) {
 
-		try {
-			if (sql == null) {
-				log.error("SQL must be not null!!");
-				return;
-			}
-
-			if (config == null) {
-				log.error("Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
-				return;
-			}
-
-			if (config.isShowSql()) {
-				log.info(sql);
-			}
-
-			final Connection conn = pool.request();
-			final Statement stat = conn.createStatement();
-
-			if (StringUtils.containsIgnoreCase(sql, "select")) {
-				final ResultSet res = stat.executeQuery(sql);
-				if (handler != null) {
-					handler.onDone(res);
-				}
-			} else {
-				stat.execute(sql);
-			}
-
-			stat.close();
-			pool.release(conn);
-
-		} catch (SQLException e) {
-			log.error(e.getMessage());
+		if (sql == null) {
+			log.error("SQL must be not null!!");
+			return;
 		}
+
+		if (config == null) {
+			log.error("Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
+			return;
+		}
+
+		sqlExcutor.excuteSql(sql, handler, config.isShowSql());
+
 	}
 
 	private Table getTableForClass(final Object entity) {

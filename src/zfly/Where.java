@@ -1,5 +1,6 @@
 package zfly;
 
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,22 +53,21 @@ public class Where {
 				sql = sql.replaceFirst("\\$c", "'" + arg + "'");
 			}
 		}
-		// 消除SQL语句中的注释符号，防止SQL注入攻击
-		sql.replaceAll("--", "");
 	}
 
-	String getSql(final Table table) {
+	String getSql(final Table table) throws SQLException {
 
 		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
-
 		final String tableName = table.getName();
-
 		final Matcher macther = Pattern.compile(regex).matcher(sql);
 		while (macther.find()) {
 			if (macther.group(2) == null) {
 				sql = macther.replaceFirst(tableName + ".");
 			} else {
 				final int position = Integer.valueOf(macther.group(2));
+				if (position > table.getColumns().size() || position < 1) {
+					throw new SQLException("Placeholder was overflow!!");
+				}
 				final Column columnInfo = table.getColumns().get(position - 1);
 				sql = macther.replaceFirst(tableName + "." + columnInfo.getName());
 			}

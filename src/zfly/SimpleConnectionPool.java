@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 /**
  * 超简单数据库连接池。不支持自动扩容；不支持懒加载，需要自行计算需要的链接数量；
  * 
@@ -14,6 +16,7 @@ import java.util.Map;
  */
 class SimpleConnectionPool {
 
+	private static Logger log = Logger.getLogger(SimpleConnectionPool.class);
 	private Map<Connection, Boolean> pool;
 	private int poolSize;
 
@@ -34,6 +37,7 @@ class SimpleConnectionPool {
 		if (!pool.get(connection)) {
 			return;
 		}
+		log.debug("Given connection back to pool!!");
 		pool.put(connection, false);
 	}
 
@@ -41,6 +45,7 @@ class SimpleConnectionPool {
 		for (Map.Entry<Connection, Boolean> entry : pool.entrySet()) {
 			if (!entry.getValue()) {
 				pool.put(entry.getKey(), true);
+				log.debug("Taken connection from pool!!");
 				return entry.getKey();
 			}
 		}

@@ -1,5 +1,8 @@
 package zfly;
 
+import java.sql.SQLException;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 class SQLUpdateBuilder implements SQLBuilder {
@@ -27,9 +30,9 @@ class SQLUpdateBuilder implements SQLBuilder {
 			sql.delete(sql.length() - 1, sql.length());
 			sql.append(condition.getSql(table));
 			return sql.toString();
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			log.error("Should not go to here!!");
-			return null;
+		} catch (IllegalArgumentException | IllegalAccessException | SQLException e) {
+			log.error(e.getMessage());
+			return StringUtils.EMPTY;
 		}
 	}
 
