@@ -33,6 +33,7 @@ public class Where {
 	 * 
 	 * @param fmt
 	 *            限定条件格式
+	 *            t：表名占位符；$1,$2...：属性占位符；$c：值占位符
 	 * @param args
 	 *            限定条件参数
 	 */
@@ -65,7 +66,7 @@ public class Where {
 		return sql;
 	}
 
-	public static Where shrotcutForId(@NotNull final Object entity, @NotNull final Table table) {
+	static Where shrotcutForId(@NotNull final Object entity, @NotNull final Table table) {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
@@ -85,7 +86,7 @@ public class Where {
 		}
 	}
 
-	public static Where shrotcutForId(final int id, @NotNull final Table table) {
+	static Where shrotcutForId(final int id, @NotNull final Table table) {
 
 		final Column primaryKey = table.getPrimaryKey();
 		if (primaryKey == null) {
