@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sun.istack.internal.NotNull;
+
 /**
  * 超简单数据库连接池。不支持自动扩容；不支持懒加载，需要自行计算需要的链接数量；
  * 
@@ -17,9 +19,9 @@ class SimpleConnectionPool {
 	private Map<Connection, Boolean> pool;
 	private int poolSize;
 
-	public SimpleConnectionPool(final int size, final String url, final String usr, final String pwd)
-			throws SQLException {
-		this.pool = new HashMap<Connection, Boolean>(size);
+	public SimpleConnectionPool(@NotNull final int size, @NotNull final String url, @NotNull final String usr,
+			@NotNull final String pwd) throws SQLException {
+		this.pool = new HashMap<>(size);
 		this.poolSize = size;
 		for (int i = 0; i < poolSize; i++) {
 			final Connection connection = DriverManager.getConnection(url, usr, pwd);
@@ -44,6 +46,6 @@ class SimpleConnectionPool {
 				return entry.getKey();
 			}
 		}
-		throw (new RuntimeException("Connection pool was empty!"));
+		return null;
 	}
 }

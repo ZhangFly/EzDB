@@ -6,12 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import zfly.ReflectTableStrategy.ReflectTableObserver;
 import zfly.ReverseTableStrategy.ReserseTableDelegate;
@@ -52,23 +57,31 @@ public class YFeiDB {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static YFeiDB createDB(final YFeiConfig config) throws ClassNotFoundException, SQLException {
-		if (config == null) {
-			throw new NullPointerException("YFeiDBConfig must be not null!!");
-		}
+	public static YFeiDB createDB(@NotNull final YFeiConfig config) {
+
 		/* 彩蛋一枚，致我最爱的小黄君，哈哈！！ */
-		if ("yfei".equalsIgnoreCase(config.getDataBase())) {
+		if (StringUtils.equalsIgnoreCase("yfei", config.getDataBase())) {
 			System.out.println("call me 小黄君！！最爱小黄君！！");
 		}
+
 		/* 加载数据库驱动 */
-		if ("mysql".equalsIgnoreCase(config.getDataBase())) {
-			Class.forName("com.mysql.jdbc.Driver");
+		if (StringUtils.equalsIgnoreCase("mysql", config.getDataBase())) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				log.error(e.getMessage());
+			}
 		}
-		final YFeiDB db = new YFeiDB();
+
 		/* 初始化连接池 */
-		db.pool = new SimpleConnectionPool(config.getPoolSize(), config.getUrl(), config.getUserName(),
-				config.getPassWord());
-		db.config = config;
+		final YFeiDB db = new YFeiDB();
+		try {
+			db.pool = new SimpleConnectionPool(config.getPoolSize(), config.getUrl(), config.getUserName(),
+					config.getPassWord());
+			db.config = config;
+		} catch (SQLException e) {
+			log.error(e.getMessage());
+		}
 		return db;
 	}
 
@@ -80,7 +93,7 @@ public class YFeiDB {
 	 * @return 所有数据库记录
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(Class<T> clazz) {
+	public <T> List<T> find(@NotNull Class<T> clazz) {
 		return find(clazz, null);
 	}
 
@@ -94,7 +107,8 @@ public class YFeiDB {
 	 * @return 数据库记录
 	 * @throws SQLException
 	 */
-	public <T> T find(Class<T> clazz, final int id) {
+	@Nullable
+	public <T> T find(@NotNull Class<T> clazz, final int id) {
 		final Table table = getTableForClass(clazz);
 		final List<T> res = find(clazz, Where.shrotcutForId(id, table));
 		return res.isEmpty() ? null : res.get(0);
@@ -110,7 +124,7 @@ public class YFeiDB {
 	 * @return 数据库记录
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(Class<T> clazz, final Where condition) {
+	public <T> List<T> find(@NotNull Class<T> clazz, final Where condition) {
 
 		final Table table = getTableForClass(clazz);
 		final List<Column> columns = table.getColumns();
@@ -120,7 +134,7 @@ public class YFeiDB {
 		final ResultSet resSql = excuteSql(sql);
 
 		if (resSql == null) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		final List<T> resList = new ArrayList<>();
@@ -173,7 +187,7 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void save(final Object entity) {
+	public void save(@NotNull final Object entity) {
 		final Table table = getTableForClass(entity.getClass());
 		final String sql = makeSQL(table, entity, Where.shrotcutForId(entity, table), new SQLSaveBuilder());
 		excuteSql(sql);
@@ -186,7 +200,7 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void update(final Object entity) {
+	public void update(@NotNull final Object entity) {
 		final Table table = getTableForClass(entity.getClass());
 		update(entity, Where.shrotcutForId(entity, table));
 	}
@@ -200,7 +214,7 @@ public class YFeiDB {
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void update(final Object entity, final Where condition) {
+	public void update(@NotNull final Object entity, final Where condition) {
 		final Table table = getTableForClass(entity.getClass());
 		final String sql = makeSQL(table, entity, condition, new SQLUpdateBuilder());
 		excuteSql(sql);
@@ -213,7 +227,7 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void delete(final Object entity) {
+	public void delete(@NotNull final Object entity) {
 		final Table table = getTableForClass(entity.getClass());
 		final String sql = makeSQL(table, entity, Where.shrotcutForId(entity, table), new SQLDeleteBuilder());
 		excuteSql(sql);
@@ -228,7 +242,7 @@ public class YFeiDB {
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void delete(Class<?> clazz, final Where condition) {
+	public void delete(@NotNull Class<?> clazz, final Where condition) {
 		final Table table = getTableForClass(clazz);
 		final String sql = makeSQL(table, null, condition, new SQLDeleteBuilder());
 		excuteSql(sql);
@@ -242,11 +256,12 @@ public class YFeiDB {
 	 * @return
 	 * @throws SQLException
 	 */
+	@Nullable
 	public ResultSet excuteSql(final String sql) {
 
 		if (config == null) {
-			throw new NullPointerException(
-					"Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
+			log.error("Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
+			return null;
 		}
 
 		final Connection conn = pool.request();
@@ -278,7 +293,9 @@ public class YFeiDB {
 		return res;
 	}
 
-	private String makeSQL(final Table table, final Object entity, final Where condition, final SQLBuilder builder) {
+	@NotNull
+	private String makeSQL(@NotNull final Table table, final Object entity, final Where condition,
+			@NotNull final SQLBuilder builder) {
 		final StringBuilder sql = builder.getBaseBuilder(entity, table);
 		if (condition != null) {
 			sql.append(" ");
@@ -288,6 +305,7 @@ public class YFeiDB {
 		return sql.toString();
 	}
 
+	@NotNull
 	private Table getTableForClass(final Class<?> clazz) {
 		if (!tables.containsKey(clazz.getName())) {
 			loadTableFromClass(clazz);

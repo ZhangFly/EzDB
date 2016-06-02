@@ -22,11 +22,18 @@ import com.sun.istack.internal.NotNull;
  *
  */
 public class Where {
-
-	final public static Where EMPTY = new Where("");
 	final private static Logger log = Logger.getLogger(Where.class);
 
 	private String sql;
+
+	/**
+	 * 构建一个空的限定条件
+	 * 
+	 * @return
+	 */
+	public static Where emptyWhere() {
+		return new Where("");
+	}
 
 	/**
 	 * 构造限定条件
@@ -46,6 +53,7 @@ public class Where {
 		sql.replaceAll("--", "");
 	}
 
+	@NotNull
 	String getSql(@NotNull final Table table) {
 
 		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
@@ -70,7 +78,7 @@ public class Where {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
-				return Where.EMPTY;
+				return Where.emptyWhere();
 			}
 
 			primaryKey.getField().setAccessible(true);
@@ -82,7 +90,7 @@ public class Where {
 
 		} catch (IllegalAccessException e) {
 			log.error(e.getMessage());
-			return Where.EMPTY;
+			return Where.emptyWhere();
 		}
 	}
 
@@ -90,7 +98,7 @@ public class Where {
 
 		final Column primaryKey = table.getPrimaryKey();
 		if (primaryKey == null) {
-			return Where.EMPTY;
+			return Where.emptyWhere();
 		}
 
 		return new Where(table.getName() + "." + primaryKey.getName() + "=$c", id);
