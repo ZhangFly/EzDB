@@ -52,5 +52,5 @@ abstract class ReflectTableStrategy {
 		}
 	}
 
-	public abstract void excute(final Class<?> clazz);
+	public abstract void doReflect(final Class<?> clazz);
 }

@@ -4,19 +4,22 @@ import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
 
-import com.sun.istack.internal.NotNull;
-
 class ReverseTableImpl1 extends ReverseTableStrategy {
 
 	final private static Logger log = Logger.getLogger(ReverseTableImpl1.class);
 
-	public ReverseTableImpl1(ReserseTableDelegate dataSource) {
+	public ReverseTableImpl1(ReverseTableDelegate dataSource) {
 		this.delegate = dataSource;
 	}
 
 	@Override
-	public <T> T excute(@NotNull Class<T> clazz) {
+	public <T> T doReverse(Class<T> clazz) {
 		try {
+
+			if (clazz == null) {
+				return null;
+			}
+
 			final T entity = clazz.newInstance();
 			for (int i = 0; i < delegate.getFieldCount(); i++) {
 				final Field f = delegate.getField(i);
@@ -25,26 +28,33 @@ class ReverseTableImpl1 extends ReverseTableStrategy {
 					log.error("Field can not be null!!");
 					return null;
 				}
-
 				f.setAccessible(true);
+
+				final Object value = delegate.getFieldVale(i);
+
+				if (value == null) {
+					log.error("Value can not be null!!");
+					return null;
+				}
+
 				if (f.getType().isPrimitive()) {
 					if (f.getType() == byte.class) {
-						f.setByte(entity, ((Byte) delegate.getFieldVale(i)).byteValue());
+						f.setByte(entity, ((Byte) value).byteValue());
 					} else if (f.getType() == short.class) {
-						f.setShort(entity, ((Short) delegate.getFieldVale(i)).shortValue());
+						f.setShort(entity, ((Short) value).shortValue());
 					} else if (f.getType() == int.class) {
-						f.setInt(entity, ((Integer) delegate.getFieldVale(i)).intValue());
+						f.setInt(entity, ((Integer) value).intValue());
 					} else if (f.getType() == long.class) {
-						f.setLong(entity, ((Long) delegate.getFieldVale(i)).longValue());
+						f.setLong(entity, ((Long) value).longValue());
 					} else if (f.getType() == float.class) {
-						f.setFloat(entity, ((Float) delegate.getFieldVale(i)).floatValue());
+						f.setFloat(entity, ((Float) value).floatValue());
 					} else if (f.getType() == double.class) {
-						f.setDouble(entity, ((Double) delegate.getFieldVale(i)).doubleValue());
+						f.setDouble(entity, ((Double) value).doubleValue());
 					} else if (f.getType() == boolean.class) {
-						f.setBoolean(entity, ((Boolean) delegate.getFieldVale(i)).booleanValue());
+						f.setBoolean(entity, ((Boolean) value).booleanValue());
 					}
 				} else {
-					f.set(entity, delegate.getFieldVale(i));
+					f.set(entity, value);
 				}
 			}
 			return entity;

@@ -4,11 +4,11 @@ import java.lang.reflect.Field;
 
 abstract class ReverseTableStrategy {
 
-	protected ReserseTableDelegate delegate;
+	protected ReverseTableDelegate delegate;
 
-	public abstract <T> T excute(Class<T> clazz);
+	public abstract <T> T doReverse(Class<T> clazz);
 
-	public interface ReserseTableDelegate {
+	public interface ReverseTableDelegate {
 
 		int getFieldCount();
 
@@ -18,12 +18,12 @@ abstract class ReverseTableStrategy {
 
 	}
 
-	public ReverseTableStrategy setReserseDataDelegate(ReserseTableDelegate dataSource) {
+	public ReverseTableStrategy setReserseDataDelegate(ReverseTableDelegate dataSource) {
 		this.delegate = dataSource;
 		return this;
 	}
 
-	public ReserseTableDelegate getReserseDataDelegate() {
+	public ReverseTableDelegate getReserseDataDelegate() {
 		return delegate;
 	}
 }

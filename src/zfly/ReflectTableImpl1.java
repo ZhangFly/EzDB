@@ -4,12 +4,14 @@ import java.lang.reflect.Field;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.sun.istack.internal.NotNull;
-
 class ReflectTableImpl1 extends ReflectTableStrategy {
 
 	@Override
-	public void excute(@NotNull Class<?> clazz) {
+	public void doReflect(Class<?> clazz) {
+
+		if (clazz == null) {
+			return;
+		}
 
 		reflectTableName(clazz);
 
@@ -26,7 +28,7 @@ class ReflectTableImpl1 extends ReflectTableStrategy {
 		}
 	}
 
-	private void reflectTableName(@NotNull final Class<?> clazz) {
+	private void reflectTableName(final Class<?> clazz) {
 		String tableName = StringUtils.EMPTY;
 		if (clazz.isAnnotationPresent(YFeiTable.class)) {
 			tableName = clazz.getAnnotation(YFeiTable.class).value();
@@ -40,13 +42,12 @@ class ReflectTableImpl1 extends ReflectTableStrategy {
 		String columnName = StringUtils.EMPTY;
 		if (additionInfo == null) {
 			columnName = f.getName();
-			notifyGotColumnName(columnName, f, clazz);
-			return;
-		}
-		if (!StringUtils.equals(additionInfo.alias(), "")) {
-			columnName = additionInfo.alias();
 		} else {
-			columnName = f.getName();
+			if (!StringUtils.equals(additionInfo.alias(), "")) {
+				columnName = additionInfo.alias();
+			} else {
+				columnName = f.getName();
+			}
 		}
 		notifyGotColumnName(columnName, f, clazz);
 	}
@@ -61,8 +62,9 @@ class ReflectTableImpl1 extends ReflectTableStrategy {
 		String primaryKey = StringUtils.EMPTY;
 		if (!StringUtils.equals(additionInfo.alias(), "")) {
 			primaryKey = additionInfo.alias();
+		} else {
+			primaryKey = f.getName();
 		}
-		primaryKey = f.getName();
 		notifyGotPrimaryKey(primaryKey, f, clazz);
 	}
 }

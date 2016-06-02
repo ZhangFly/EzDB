@@ -15,6 +15,10 @@ class Table {
 	private Column primaryKey;
 	private List<Column> columns = new ArrayList<>();
 
+	public static Table emptyTable() {
+		return new Table();
+	}
+
 	public String getName() {
 		return name;
 	}

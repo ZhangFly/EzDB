@@ -31,7 +31,7 @@ public class Test {
 		logger.info(mysql.find(Person.class, 1));
 		logger.info(mysql.find(Person.class, new Where("$1>$c", 1)));
 
-		logger.info(mysql.find(Student.class));
+		logger.info(mysql.find(null));
 
 	}
 

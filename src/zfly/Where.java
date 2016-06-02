@@ -5,8 +5,6 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import com.sun.istack.internal.NotNull;
-
 /**
  * 查询条件生成类。支持 t 表名通配符；支持 $1,$2... 属性通配符；支持值通配符 $c。
  * 
@@ -32,7 +30,7 @@ public class Where {
 	 * @return
 	 */
 	public static Where emptyWhere() {
-		return new Where("");
+		return new Where(null);
 	}
 
 	/**
@@ -44,17 +42,21 @@ public class Where {
 	 * @param args
 	 *            限定条件参数
 	 */
-	public Where(@NotNull final String fmt, final Object... args) {
-		this.sql = "WHERE " + fmt;
-		for (Object arg : args) {
-			sql = sql.replaceFirst("\\$c", "'" + arg + "'");
+	public Where(final String fmt, final Object... args) {
+
+		if (fmt == null) {
+			this.sql = "";
+		} else {
+			this.sql = " WHERE " + fmt;
+			for (Object arg : args) {
+				sql = sql.replaceFirst("\\$c", "'" + arg + "'");
+			}
 		}
 		// 消除SQL语句中的注释符号，防止SQL注入攻击
 		sql.replaceAll("--", "");
 	}
 
-	@NotNull
-	String getSql(@NotNull final Table table) {
+	String getSql(final Table table) {
 
 		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
 
@@ -71,10 +73,10 @@ public class Where {
 			}
 			macther.reset(sql);
 		}
-		return sql;
+		return sql + ";";
 	}
 
-	static Where shrotcutForId(@NotNull final Object entity, @NotNull final Table table) {
+	static Where shrotcutForId(final Object entity, final Table table) {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
@@ -94,7 +96,11 @@ public class Where {
 		}
 	}
 
-	static Where shrotcutForId(final int id, @NotNull final Table table) {
+	static Where shrotcutForId(final int id, final Table table) {
+
+		if (table == null) {
+			return Where.emptyWhere();
+		}
 
 		final Column primaryKey = table.getPrimaryKey();
 		if (primaryKey == null) {

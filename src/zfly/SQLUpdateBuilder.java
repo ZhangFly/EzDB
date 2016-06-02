@@ -2,14 +2,12 @@ package zfly;
 
 import org.apache.log4j.Logger;
 
-import com.sun.istack.internal.NotNull;
-
 class SQLUpdateBuilder implements SQLBuilder {
 
 	private static Logger log = Logger.getLogger(SQLUpdateBuilder.class);
 
 	@Override
-	public StringBuilder getBaseBuilder(Object entity, @NotNull Table table) {
+	public String getSql(Object entity, Table table, Where condition) {
 		try {
 			final StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE ");
@@ -27,7 +25,8 @@ class SQLUpdateBuilder implements SQLBuilder {
 				}
 			}
 			sql.delete(sql.length() - 1, sql.length());
-			return sql;
+			sql.append(condition.getSql(table));
+			return sql.toString();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			log.error("Should not go to here!!");
 			return null;

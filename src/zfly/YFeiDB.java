@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
 import zfly.ReflectTableStrategy.ReflectTableObserver;
-import zfly.ReverseTableStrategy.ReserseTableDelegate;
+import zfly.ReverseTableStrategy.ReverseTableDelegate;
 
 /**
  * 简单JDBC封装，通过反射和注解的方式提供简易数据库操作
@@ -42,7 +38,8 @@ public class YFeiDB {
 		log4jProperties.setProperty("log4j.rootLogger", "debug, stdout");
 		log4jProperties.setProperty("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
 		log4jProperties.setProperty("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
-		log4jProperties.setProperty("log4j.appender.stdout.layout.ConversionPattern", "%d{yyyy-MM-dd HH:mm:ss} %p [%c] %m%n");
+		log4jProperties.setProperty("log4j.appender.stdout.layout.ConversionPattern",
+				"%d{yyyy-MM-dd HH:mm:ss} %p [%c] %m%n");
 		PropertyConfigurator.configure(log4jProperties);
 	}
 
@@ -60,14 +57,17 @@ public class YFeiDB {
 	 * .setUserName("root")
 	 * .setPassWord("123456"));
 	 * 
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
 	 */
-	public static YFeiDB createDB(@NotNull final YFeiConfig config) {
+	public static YFeiDB createDB(final YFeiConfig config) {
+
+		if (config == null) {
+			log.error("Config must be not null !!");
+			return null;
+		}
 
 		/* 彩蛋一枚，致我最爱的小黄君，哈哈！！ */
 		if (StringUtils.equalsIgnoreCase("yfei", config.getDataBase())) {
-			System.out.println("call me 小黄君！！最爱小黄君！！");
+			log.info("call me 小黄君！！最爱小黄君！！");
 		}
 
 		/* 加载数据库驱动 */
@@ -99,8 +99,8 @@ public class YFeiDB {
 	 * @return 所有数据库记录
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(@NotNull Class<T> clazz) {
-		return find(clazz, null);
+	public <T> List<T> find(Class<T> clazz) {
+		return find(clazz, Where.emptyWhere());
 	}
 
 	/**
@@ -113,8 +113,7 @@ public class YFeiDB {
 	 * @return 数据库记录
 	 * @throws SQLException
 	 */
-	@Nullable
-	public <T> T find(@NotNull Class<T> clazz, final int id) {
+	public <T> T find(Class<T> clazz, final int id) {
 		final Table table = getTableForClass(clazz);
 		final List<T> res = find(clazz, Where.shrotcutForId(id, table));
 		return res.isEmpty() ? null : res.get(0);
@@ -130,58 +129,47 @@ public class YFeiDB {
 	 * @return 数据库记录
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(@NotNull Class<T> clazz, final Where condition) {
+	public <T> List<T> find(Class<T> clazz, final Where condition) {
 
 		final Table table = getTableForClass(clazz);
 		final List<Column> columns = table.getColumns();
 
-		final String sql = makeSQL(table, null, condition, new SQLFindBuilder());
-
-		final ResultSet resSql = excuteSql(sql);
-
-		if (resSql == null) {
-			return Collections.emptyList();
-		}
-
+		final String sql = new SQLFindBuilder().getSql(null, table, condition);
 		final List<T> resList = new ArrayList<>();
 
-		final ReverseTableStrategy reverse = new ReverseTableImpl1(new ReserseTableDelegate() {
+		excuteSql(sql, (result) -> {
+			final ReverseTableStrategy reverse = new ReverseTableImpl1(new ReverseTableDelegate() {
 
-			@Override
-			public int getFieldCount() {
-				return columns.size();
-			}
-
-			@Override
-			public Field getField(int position) {
-				return columns.get(position).getField();
-			}
-
-			@Override
-			public Object getFieldVale(int position) {
-				try {
-					return resSql.getObject(columns.get(position).getName());
-				} catch (SQLException e) {
-					log.error("Column was not mathed Class.Field<" + columns.get(position).getName() + ">");
-					return null;
+				@Override
+				public int getFieldCount() {
+					return columns.size();
 				}
-			}
 
+				@Override
+				public Field getField(int position) {
+					return columns.get(position).getField();
+				}
+
+				@Override
+				public Object getFieldVale(int position) {
+					try {
+						return result.getObject(columns.get(position).getName());
+					} catch (SQLException e) {
+						log.error("Column was not mathed Class.Field<" + columns.get(position).getName() + ">");
+						return null;
+					}
+				}
+
+			});
+
+			try {
+				while (result.next()) {
+					resList.add(reverse.doReverse(clazz));
+				}
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+			}
 		});
-
-		try {
-			while (resSql.next()) {
-				resList.add(reverse.excute(clazz));
-			}
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		}
-
-		try {
-			resSql.close();
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		}
 
 		return resList;
 	}
@@ -193,9 +181,9 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void save(@NotNull final Object entity) {
-		final Table table = getTableForClass(entity.getClass());
-		final String sql = makeSQL(table, entity, Where.shrotcutForId(entity, table), new SQLSaveBuilder());
+	public void save(final Object entity) {
+		final Table table = getTableForClass(entity);
+		final String sql = new SQLSaveBuilder().getSql(entity, table, Where.shrotcutForId(entity, table));
 		excuteSql(sql);
 	}
 
@@ -206,8 +194,8 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void update(@NotNull final Object entity) {
-		final Table table = getTableForClass(entity.getClass());
+	public void update(final Object entity) {
+		final Table table = getTableForClass(entity);
 		update(entity, Where.shrotcutForId(entity, table));
 	}
 
@@ -220,9 +208,9 @@ public class YFeiDB {
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void update(@NotNull final Object entity, final Where condition) {
-		final Table table = getTableForClass(entity.getClass());
-		final String sql = makeSQL(table, entity, condition, new SQLUpdateBuilder());
+	public void update(final Object entity, final Where condition) {
+		final Table table = getTableForClass(entity);
+		final String sql = new SQLUpdateBuilder().getSql(entity, table, condition);
 		excuteSql(sql);
 	}
 
@@ -233,9 +221,9 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void delete(@NotNull final Object entity) {
-		final Table table = getTableForClass(entity.getClass());
-		final String sql = makeSQL(table, entity, Where.shrotcutForId(entity, table), new SQLDeleteBuilder());
+	public void delete(final Object entity) {
+		final Table table = getTableForClass(entity);
+		final String sql = new SQLDeleteBuilder().getSql(entity, table, Where.shrotcutForId(entity, table));
 		excuteSql(sql);
 	}
 
@@ -248,9 +236,9 @@ public class YFeiDB {
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void delete(@NotNull Class<?> clazz, final Where condition) {
+	public void delete(final Class<?> clazz, final Where condition) {
 		final Table table = getTableForClass(clazz);
-		final String sql = makeSQL(table, null, condition, new SQLDeleteBuilder());
+		final String sql = new SQLDeleteBuilder().getSql(null, table, condition);
 		excuteSql(sql);
 	}
 
@@ -258,64 +246,74 @@ public class YFeiDB {
 	 * 执行SQL语句操作
 	 * 
 	 * @param sql
+	 */
+	public void excuteSql(final String sql) {
+		excuteSql(sql, null);
+	}
+
+	/**
+	 * 执行SQL语句操作
+	 * 
+	 * @param sql
 	 *            SQL语句
+	 * @param handler
+	 *            执行成功回调函数
 	 * @return
 	 * @throws SQLException
 	 */
-	@Nullable
-	public ResultSet excuteSql(final String sql) {
-
-		if (config == null) {
-			log.error("Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
-			return null;
-		}
-
-		final Connection conn = pool.request();
-		Statement stat = null;
+	public void excuteSql(final String sql, final YFeiDBExcuteSqlHandler handler) {
 
 		try {
-			stat = conn.createStatement();
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		}
+			if (sql == null) {
+				log.error("SQL must be not null!!");
+				return;
+			}
 
-		ResultSet res = null;
-		try {
-			if (sql.contains("SELECT")) {
-				res = stat.executeQuery(sql);
+			if (config == null) {
+				log.error("Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
+				return;
+			}
+
+			if (config.isShowSql()) {
+				log.info(sql);
+			}
+
+			final Connection conn = pool.request();
+			final Statement stat = conn.createStatement();
+
+			if (StringUtils.containsIgnoreCase(sql, "select")) {
+				final ResultSet res = stat.executeQuery(sql);
+				if (handler != null) {
+					handler.onDone(res);
+				}
 			} else {
 				stat.execute(sql);
 			}
+
+			stat.close();
+			pool.release(conn);
+
 		} catch (SQLException e) {
 			log.error(e.getMessage());
 		}
-
-		pool.release(conn);
-
-		if (config.isShowSql()) {
-			log.info(sql);
-		}
-
-		return res;
 	}
 
-	@NotNull
-	private String makeSQL(@NotNull final Table table, final Object entity, final Where condition,
-			@NotNull final SQLBuilder builder) {
-		final StringBuilder sql = builder.getBaseBuilder(entity, table);
-		if (condition != null) {
-			sql.append(" ");
-			sql.append(condition.getSql(table));
+	private Table getTableForClass(final Object entity) {
+		if (entity == null) {
+			return Table.emptyTable();
 		}
-		sql.append(";");
-		return sql.toString();
+		return getTableForClass(entity.getClass());
 	}
 
-	@NotNull
 	private Table getTableForClass(final Class<?> clazz) {
+		if (clazz == null) {
+			return Table.emptyTable();
+		}
+
 		if (!tables.containsKey(clazz.getName())) {
 			loadTableFromClass(clazz);
 		}
+
 		return tables.get(clazz.getName());
 	}
 
@@ -338,7 +336,7 @@ public class YFeiDB {
 			public void gotColumnName(String columnName, Field f, Class<?> clazz) {
 				table.addColumn(new Column(columnName, f));
 			}
-		}).excute(clazz);
+		}).doReflect(clazz);
 		tables.put(clazz.getName(), table);
 	}
 }
