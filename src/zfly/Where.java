@@ -69,7 +69,7 @@ public class Where {
 					throw new SQLException("Placeholder was overflow!!");
 				}
 				final Column columnInfo = table.getColumns().get(position - 1);
-				sql = macther.replaceFirst(tableName + "." + columnInfo.getName());
+				sql = macther.replaceFirst(String.format("%s.%s", tableName, columnInfo.getName()));
 			}
 			macther.reset(sql);
 		}

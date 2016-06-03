@@ -8,6 +8,12 @@ import java.sql.Statement;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * 简单SQL语句执行器，内部维持有简单连接池
+ * 
+ * @author YFei
+ *
+ */
 public class YFeiSQLExcutor {
 
 	private static Logger log = Logger.getLogger(YFeiSQLExcutor.class);
@@ -21,30 +27,37 @@ public class YFeiSQLExcutor {
 		}
 	}
 
-	public void excuteSql(final String sql, final boolean isShowSQL) {
-		excuteSql(sql, null, isShowSQL);
+	/**
+	 * 执行SQL语句
+	 * 
+	 * @param sql
+	 *            SQL语句
+	 */
+	public void doExcute(final String sql) {
+		doExcute(sql, null);
 	}
 
-	public void excuteSql(final String sql, final YFeiDBExcuteSqlHandler handler, final boolean isShowSQL) {
+	/**
+	 * 
+	 * @param sql
+	 * @param handler
+	 */
+	public void doExcute(final String sql, final YFeiDBExcuteSqlHandler handler) {
 
 		final Connection conn = pool.request();
 		if (conn == null) {
 			log.error("Connection pool was empty!!");
 		}
 
-		final Statement stat = createStatement(conn);
+		final Statement stat = openSource(conn);
 
-		if (isShowSQL) {
-			log.info(sql);
-		}
+		excuteSQL(sql, handler, stat);
 
-		doExcute(sql, handler, stat);
-
-		relaseStatement(conn, stat);
+		closeSource(conn, stat);
 
 	}
 
-	private void relaseStatement(final Connection conn, Statement stat) {
+	private void closeSource(final Connection conn, final Statement stat) {
 		try {
 			if (stat == null) {
 				return;
@@ -57,7 +70,7 @@ public class YFeiSQLExcutor {
 		}
 	}
 
-	private Statement createStatement(final Connection conn) {
+	private Statement openSource(final Connection conn) {
 		try {
 			return conn.createStatement();
 		} catch (SQLException e) {
@@ -67,7 +80,7 @@ public class YFeiSQLExcutor {
 		}
 	}
 
-	private void doExcute(final String sql, final YFeiDBExcuteSqlHandler handler, Statement stat) {
+	private void excuteSQL(final String sql, final YFeiDBExcuteSqlHandler handler, Statement stat) {
 		try {
 			if (StringUtils.containsIgnoreCase(sql, "select")) {
 				final ResultSet res = stat.executeQuery(sql);

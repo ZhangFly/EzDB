@@ -8,7 +8,7 @@ import model.Person;
 import zfly.YFeiConfig;
 import zfly.YFeiDB;
 
-public class testSave {
+public class testDelete {
 
 	private static YFeiDB mysql = null;
 
@@ -21,12 +21,9 @@ public class testSave {
 	}
 
 	@Test
-	public void testSave() {
-		final Person alert = new Person();
-		alert.setId(1);
-		alert.setAge(0);
-		alert.setName("maxpup");
-		alert.setSex("unkonwn");
-		alert.setIntro("Big SB!");
+	public void Delete() {
+		final Person toDelete = new Person();
+		toDelete.setId(1);
+
 	}
 }

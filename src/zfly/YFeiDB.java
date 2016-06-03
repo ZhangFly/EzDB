@@ -146,7 +146,7 @@ public class YFeiDB {
 		}
 		final List<T> resList = new ArrayList<>();
 
-		excuteSql(sql, (result) -> {
+		excuteSQL(sql, (result) -> {
 			final ReverseTableStrategy reverse = new ReverseTableImpl1(new ReverseTableDelegate() {
 
 				@Override
@@ -193,7 +193,7 @@ public class YFeiDB {
 	public void save(final Object entity) {
 		final Table table = getTableForClass(entity);
 		final String sql = new SQLSaveBuilder().getSql(entity, table, Where.shrotcutForId(entity, table));
-		excuteSql(sql);
+		excuteSQL(sql);
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class YFeiDB {
 		final Table table = getTableForClass(entity);
 		final String sql = new SQLUpdateBuilder().getSql(entity, table,
 				condition == null ? Where.emptyWhere() : condition);
-		excuteSql(sql);
+		excuteSQL(sql);
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class YFeiDB {
 	public void delete(final Object entity) {
 		final Table table = getTableForClass(entity);
 		final String sql = new SQLDeleteBuilder().getSql(entity, table, Where.shrotcutForId(entity, table));
-		excuteSql(sql);
+		excuteSQL(sql);
 	}
 
 	/**
@@ -249,43 +249,18 @@ public class YFeiDB {
 	public void delete(final Class<?> clazz, final Where condition) {
 		final Table table = getTableForClass(clazz);
 		final String sql = new SQLDeleteBuilder().getSql(null, table, condition);
-		excuteSql(sql);
+		excuteSQL(sql);
 	}
 
-	/**
-	 * 执行SQL语句操作
-	 * 
-	 * @param sql
-	 */
-	public void excuteSql(final String sql) {
-
-		excuteSql(sql, null);
+	private void excuteSQL(final String sql) {
+		excuteSQL(sql, null);
 	}
 
-	/**
-	 * 执行SQL语句操作
-	 * 
-	 * @param sql
-	 *            SQL语句
-	 * @param handler
-	 *            执行成功回调函数
-	 * @return
-	 * @throws SQLException
-	 */
-	public void excuteSql(final String sql, final YFeiDBExcuteSqlHandler handler) {
-
-		if (sql == null) {
-			log.error("SQL must be not null!!");
-			return;
+	private void excuteSQL(final String sql, final YFeiDBExcuteSqlHandler handler) {
+		if (config.isShowSql()) {
+			log.info(sql);
 		}
-
-		if (config == null) {
-			log.error("Cannot find an valid configuration for YFeiDB, please initialize it at first!!");
-			return;
-		}
-
-		sqlExcutor.excuteSql(sql, handler, config.isShowSql());
-
+		sqlExcutor.doExcute(sql, handler);
 	}
 
 	private Table getTableForClass(final Object entity) {
