@@ -2,14 +2,20 @@ package unit;
 
 import model.Person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestExpectUtils {
 
-	final public static Person[] EXPECT_ARRAY = new Person[2];
 	public static Person EXPECT_1 = null;
 	public static Person EXPECT_2 = null;
+	final public static Person EXPECT_ARRAY[] = new Person[2];
 
 	static {
 		init();
+	}
+
+	private TestExpectUtils() {
 	}
 
 	public static void reset() {

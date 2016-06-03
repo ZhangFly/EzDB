@@ -14,12 +14,12 @@ import org.apache.log4j.Logger;
  * @author YFei
  *
  */
-public class YFeiSQLExcutor {
+public class YFeiSQLExecutor {
 
-	private static Logger log = Logger.getLogger(YFeiSQLExcutor.class);
+	private static Logger log = Logger.getLogger(YFeiSQLExecutor.class);
 	private SimpleConnectionPool pool;
 
-	YFeiSQLExcutor(final int size, final String url, final String usr, final String pwd) throws SQLException {
+	YFeiSQLExecutor(final int size, final String url, final String usr, final String pwd) throws SQLException {
 
 		pool = new SimpleConnectionPool(size, url, usr, pwd);
 	}

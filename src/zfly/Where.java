@@ -52,6 +52,11 @@ public class Where {
 
 	String getCondition(final Table table) throws SQLException {
 
+		if (table == null) {
+
+			throw new SQLException("No enough info to make condition!!");
+		}
+
 		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
 		final String tableName = table.getName();
 		final Matcher macther = Pattern.compile(regex).matcher(sql);

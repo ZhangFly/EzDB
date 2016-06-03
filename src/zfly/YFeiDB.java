@@ -27,7 +27,7 @@ public class YFeiDB {
 	private static Logger log = Logger.getLogger(YFeiDB.class);
 
 	private YFeiConfig config;
-	private YFeiSQLExcutor sqlExcutor;
+	private YFeiSQLExecutor sqlExcutor;
 	private Map<String, Table> tables = new HashMap<>();
 
 	// 加载log4j配置
@@ -61,8 +61,7 @@ public class YFeiDB {
 	public static YFeiDB createDB(final YFeiConfig config) throws SQLException {
 
 		if (config == null) {
-			log.error("Config must be not null !!");
-			return null;
+			throw new SQLException("Config must be not null !!");
 		}
 
 		/* 彩蛋一枚，致我最爱的小黄君，哈哈！！ */
@@ -93,8 +92,13 @@ public class YFeiDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static YFeiSQLExcutor createSQLExcutor(final YFeiConfig config) throws SQLException {
-		return new YFeiSQLExcutor(config.getPoolSize(), config.getUrl(), config.getUserName(), config.getPassWord());
+	public static YFeiSQLExecutor createSQLExcutor(final YFeiConfig config) throws SQLException {
+
+		if (config == null) {
+			throw new SQLException("Config must be not null !!");
+		}
+
+		return new YFeiSQLExecutor(config.getPoolSize(), config.getUrl(), config.getUserName(), config.getPassWord());
 	}
 
 	/**
@@ -130,7 +134,7 @@ public class YFeiDB {
 	 * 
 	 * @param clazz
 	 *            实体类
-	 * @param id
+	 * @param condition
 	 *            主键
 	 * @return 数据库记录
 	 * @throws SQLException
