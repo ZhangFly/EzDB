@@ -10,7 +10,7 @@ class SQLUpdateBuilder implements SQLBuilder {
 	private static Logger log = Logger.getLogger(SQLUpdateBuilder.class);
 
 	@Override
-	public String getSql(Object entity, Table table, Where condition) {
+	public String getSql(Object entity, Table table, Where condition) throws SQLException {
 		try {
 			final StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE ");
@@ -28,9 +28,9 @@ class SQLUpdateBuilder implements SQLBuilder {
 				}
 			}
 			sql.delete(sql.length() - 1, sql.length());
-			sql.append(condition.getSql(table));
+			sql.append(condition.getCondition(table));
 			return sql.toString();
-		} catch (IllegalArgumentException | IllegalAccessException | SQLException e) {
+		} catch (IllegalArgumentException | IllegalAccessException e) {
 			log.error(e.getMessage());
 			return StringUtils.EMPTY;
 		}

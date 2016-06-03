@@ -50,7 +50,7 @@ public class Where {
 		}
 	}
 
-	String getSql(final Table table) throws SQLException {
+	String getCondition(final Table table) throws SQLException {
 
 		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
 		final String tableName = table.getName();

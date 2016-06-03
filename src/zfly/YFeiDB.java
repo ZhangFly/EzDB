@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -57,7 +58,7 @@ public class YFeiDB {
 	 * @throws ClassNotFoundException
 	 * 
 	 */
-	public static YFeiDB createDB(final YFeiConfig config) throws SQLException, ClassNotFoundException {
+	public static YFeiDB createDB(final YFeiConfig config) throws SQLException {
 
 		if (config == null) {
 			log.error("Config must be not null !!");
@@ -71,7 +72,11 @@ public class YFeiDB {
 
 		/* 加载数据库驱动 */
 		if (StringUtils.equalsIgnoreCase("mysql", config.getDataBase())) {
-			Class.forName("com.mysql.jdbc.Driver");
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				throw new SQLException(String.format("Can not find driver for database", config.getDataBase()));
+			}
 		}
 
 		/* 初始化连接池 */
@@ -259,16 +264,14 @@ public class YFeiDB {
 		sqlExcutor.doExcute(sql, handler);
 	}
 
-	private Table getTableForClass(final Object entity) {
-		if (entity == null) {
-			return null;
-		}
-		return getTableForClass(entity.getClass());
+	private Table getTableForClass(final Object entity) throws SQLException {
+		return getTableForClass(entity == null ? null : entity.getClass());
 	}
 
-	private Table getTableForClass(final Class<?> clazz) {
+	private Table getTableForClass(final Class<?> clazz) throws SQLException {
 		if (clazz == null) {
-			return null;
+			throw new SQLException(
+					String.format("Can not find table information for Class<%s>", ClassUtils.getSimpleName(clazz)));
 		}
 
 		if (!tables.containsKey(clazz.getName())) {
