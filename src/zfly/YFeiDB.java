@@ -53,8 +53,11 @@ public class YFeiDB {
 	 * .setUserName("root")
 	 * .setPassWord("123456"));
 	 * 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * 
 	 */
-	public static YFeiDB createDB(final YFeiConfig config) {
+	public static YFeiDB createDB(final YFeiConfig config) throws SQLException, ClassNotFoundException {
 
 		if (config == null) {
 			log.error("Config must be not null !!");
@@ -68,18 +71,13 @@ public class YFeiDB {
 
 		/* 加载数据库驱动 */
 		if (StringUtils.equalsIgnoreCase("mysql", config.getDataBase())) {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				log.error(e.getMessage());
-			}
+			Class.forName("com.mysql.jdbc.Driver");
 		}
 
 		/* 初始化连接池 */
 		final YFeiDB db = new YFeiDB();
-		if ((db.sqlExcutor = createSQLExcutor(config)) != null) {
-			db.config = config;
-		}
+		db.sqlExcutor = createSQLExcutor(config);
+		db.config = config;
 		return db;
 	}
 
@@ -88,11 +86,9 @@ public class YFeiDB {
 	 * 
 	 * @param config
 	 * @return
+	 * @throws SQLException
 	 */
-	public static YFeiSQLExcutor createSQLExcutor(final YFeiConfig config) {
-		if (config == null) {
-			return null;
-		}
+	public static YFeiSQLExcutor createSQLExcutor(final YFeiConfig config) throws SQLException {
 		return new YFeiSQLExcutor(config.getPoolSize(), config.getUrl(), config.getUserName(), config.getPassWord());
 	}
 
@@ -104,7 +100,7 @@ public class YFeiDB {
 	 * @return 所有数据库记录
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(Class<T> clazz) {
+	public <T> List<T> find(Class<T> clazz) throws SQLException {
 		return find(clazz, Where.emptyWhere());
 	}
 
@@ -118,7 +114,7 @@ public class YFeiDB {
 	 * @return 数据库记录
 	 * @throws SQLException
 	 */
-	public <T> T find(Class<T> clazz, final int id) {
+	public <T> T find(Class<T> clazz, final int id) throws SQLException {
 		final Table table = getTableForClass(clazz);
 		final List<T> res = find(clazz, Where.shrotcutForId(id, table));
 		return res.isEmpty() ? null : res.get(0);
@@ -134,7 +130,7 @@ public class YFeiDB {
 	 * @return 数据库记录
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(Class<T> clazz, final Where condition) {
+	public <T> List<T> find(Class<T> clazz, final Where condition) throws SQLException {
 
 		final Table table = getTableForClass(clazz);
 		final List<Column> columns = table.getColumns();
@@ -190,7 +186,7 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void save(final Object entity) {
+	public void save(final Object entity) throws SQLException {
 		final Table table = getTableForClass(entity);
 		final String sql = new SQLSaveBuilder().getSql(entity, table, Where.shrotcutForId(entity, table));
 		excuteSQL(sql);
@@ -203,7 +199,7 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void update(final Object entity) {
+	public void update(final Object entity) throws SQLException {
 		final Table table = getTableForClass(entity);
 		update(entity, Where.shrotcutForId(entity, table));
 	}
@@ -217,7 +213,7 @@ public class YFeiDB {
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void update(final Object entity, final Where condition) {
+	public void update(final Object entity, final Where condition) throws SQLException {
 		final Table table = getTableForClass(entity);
 		final String sql = new SQLUpdateBuilder().getSql(entity, table,
 				condition == null ? Where.emptyWhere() : condition);
@@ -231,7 +227,7 @@ public class YFeiDB {
 	 *            实体类
 	 * @throws SQLException
 	 */
-	public void delete(final Object entity) {
+	public void delete(final Object entity) throws SQLException {
 		final Table table = getTableForClass(entity);
 		final String sql = new SQLDeleteBuilder().getSql(entity, table, Where.shrotcutForId(entity, table));
 		excuteSQL(sql);
@@ -246,17 +242,17 @@ public class YFeiDB {
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void delete(final Class<?> clazz, final Where condition) {
+	public void delete(final Class<?> clazz, final Where condition) throws SQLException {
 		final Table table = getTableForClass(clazz);
 		final String sql = new SQLDeleteBuilder().getSql(null, table, condition);
 		excuteSQL(sql);
 	}
 
-	private void excuteSQL(final String sql) {
+	private void excuteSQL(final String sql) throws SQLException {
 		excuteSQL(sql, null);
 	}
 
-	private void excuteSQL(final String sql, final YFeiDBExcuteSqlHandler handler) {
+	private void excuteSQL(final String sql, final YFeiDBExcuteSqlHandler handler) throws SQLException {
 		if (config.isShowSql()) {
 			log.info(sql);
 		}
@@ -265,14 +261,14 @@ public class YFeiDB {
 
 	private Table getTableForClass(final Object entity) {
 		if (entity == null) {
-			return Table.emptyTable();
+			return null;
 		}
 		return getTableForClass(entity.getClass());
 	}
 
 	private Table getTableForClass(final Class<?> clazz) {
 		if (clazz == null) {
-			return Table.emptyTable();
+			return null;
 		}
 
 		if (!tables.containsKey(clazz.getName())) {

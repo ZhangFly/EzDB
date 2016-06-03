@@ -19,12 +19,9 @@ public class YFeiSQLExcutor {
 	private static Logger log = Logger.getLogger(YFeiSQLExcutor.class);
 	private SimpleConnectionPool pool;
 
-	YFeiSQLExcutor(final int size, final String url, final String usr, final String pwd) {
-		try {
-			pool = new SimpleConnectionPool(size, url, usr, pwd);
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		}
+	YFeiSQLExcutor(final int size, final String url, final String usr, final String pwd) throws SQLException {
+
+		pool = new SimpleConnectionPool(size, url, usr, pwd);
 	}
 
 	/**
@@ -32,8 +29,9 @@ public class YFeiSQLExcutor {
 	 * 
 	 * @param sql
 	 *            SQL语句
+	 * @throws SQLException
 	 */
-	public void doExcute(final String sql) {
+	public void doExcute(final String sql) throws SQLException {
 		doExcute(sql, null);
 	}
 
@@ -41,47 +39,16 @@ public class YFeiSQLExcutor {
 	 * 
 	 * @param sql
 	 * @param handler
+	 * @throws SQLException
 	 */
-	public void doExcute(final String sql, final YFeiDBExcuteSqlHandler handler) {
+	public void doExcute(final String sql, final YFeiDBExcuteSqlHandler handler) throws SQLException {
 
 		final Connection conn = pool.request();
 		if (conn == null) {
-			log.error("Connection pool was empty!!");
+			throw new SQLException("Connection in pool was all used!!");
 		}
-
-		final Statement stat = openSource(conn);
-
-		excuteSQL(sql, handler, stat);
-
-		closeSource(conn, stat);
-
-	}
-
-	private void closeSource(final Connection conn, final Statement stat) {
 		try {
-			if (stat == null) {
-				return;
-			}
-			stat.close();
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-		} finally {
-			pool.release(conn);
-		}
-	}
-
-	private Statement openSource(final Connection conn) {
-		try {
-			return conn.createStatement();
-		} catch (SQLException e) {
-			log.error(e.getMessage());
-			pool.release(conn);
-			return null;
-		}
-	}
-
-	private void excuteSQL(final String sql, final YFeiDBExcuteSqlHandler handler, Statement stat) {
-		try {
+			final Statement stat = conn.createStatement();
 			if (StringUtils.containsIgnoreCase(sql, "select")) {
 				final ResultSet res = stat.executeQuery(sql);
 				if (handler != null) {
@@ -90,9 +57,11 @@ public class YFeiSQLExcutor {
 			} else {
 				stat.execute(sql);
 			}
+			stat.close();
 		} catch (SQLException e) {
-			log.error(e.getMessage());
+			throw e;
+		} finally {
+			pool.release(conn);
 		}
 	}
-
 }

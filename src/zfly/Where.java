@@ -44,14 +44,9 @@ public class Where {
 	 *            限定条件参数
 	 */
 	public Where(final String fmt, final Object... args) {
-
-		if (fmt == null) {
-			this.sql = "";
-		} else {
-			this.sql = " WHERE " + fmt;
-			for (Object arg : args) {
-				sql = sql.replaceFirst("\\$c", "'" + arg + "'");
-			}
+		sql = fmt == null ? "" : " WHERE " + fmt;
+		for (Object arg : args) {
+			sql = sql.replaceFirst("\\$c", "'" + arg + "'");
 		}
 	}
 

@@ -3,6 +3,8 @@ package unit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 
 import model.Person;
@@ -15,7 +17,7 @@ public class TestUpdate {
 	private static YFeiDB mysql = null;
 
 	@Test
-	public void testCreateDB() {
+	public void testCreateDB() throws ClassNotFoundException, SQLException {
 		mysql = YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")
 				.setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
 				.setPassWord("123456").setPoolSize(1).setShowSql(true));
@@ -23,7 +25,7 @@ public class TestUpdate {
 	}
 
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		final Person alert = new Person();
 		alert.setId(1);
 		alert.setAge(0);

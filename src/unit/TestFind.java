@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -21,7 +22,7 @@ public class TestFind {
 	private static YFeiDB mysql = null;
 
 	@Test
-	public void testCreateDB() {
+	public void testCreateDB() throws ClassNotFoundException, SQLException {
 		mysql = YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")
 				.setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
 				.setPassWord("123456").setPoolSize(1).setShowSql(true));
@@ -29,7 +30,7 @@ public class TestFind {
 	}
 
 	@Test
-	public void testFindAll() {
+	public void testFindAll() throws SQLException {
 		final List<Person> right = mysql.find(Person.class);
 		Assert.assertArrayEquals(TestExpectUtils.EXPECT_ARRAY, right.toArray());
 
@@ -38,7 +39,7 @@ public class TestFind {
 	}
 
 	@Test
-	public void testFindById() {
+	public void testFindById() throws SQLException {
 		final Person right1 = mysql.find(Person.class, 1);
 		assertEquals(TestExpectUtils.EXPECT_1, right1);
 		final Person right2 = mysql.find(Person.class, 2);
@@ -52,7 +53,7 @@ public class TestFind {
 	}
 
 	@Test
-	public void testFindByCondition() {
+	public void testFindByCondition() throws SQLException {
 		final List<Person> right1 = mysql.find(Person.class, new Where("id=1"));
 		assertEquals(TestExpectUtils.EXPECT_1, right1.get(0));
 		final List<Person> right2 = mysql.find(Person.class, new Where("t.id=1"));
