@@ -219,7 +219,8 @@ public class YFeiDB {
 	 */
 	public void update(final Object entity, final Where condition) {
 		final Table table = getTableForClass(entity);
-		final String sql = new SQLUpdateBuilder().getSql(entity, table, condition);
+		final String sql = new SQLUpdateBuilder().getSql(entity, table,
+				condition == null ? Where.emptyWhere() : condition);
 		excuteSql(sql);
 	}
 

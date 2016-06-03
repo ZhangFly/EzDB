@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -87,4 +88,8 @@ public class TestFind {
 		assertTrue(wrong4.isEmpty());
 	}
 
+	@AfterClass
+	public static void reset() {
+		TestExpectUtils.reset();
+	}
 }
