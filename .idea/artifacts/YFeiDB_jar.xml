@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="YFeiDB:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/YFeiDB_jar</output-path>
+    <root id="archive" name="YFeiDB.jar">
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-lang3-3.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/log4j-1.2.17.jar" path-in-jar="/" />
+      <element id="module-output" name="YFeiDB" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: mysql-connector-java-5.0.4.jar commons-lang3-3.0.1.jar log
+ 4j-1.2.17.jarar
+
