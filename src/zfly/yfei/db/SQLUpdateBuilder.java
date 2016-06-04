@@ -1,41 +1,37 @@
-package zfly;
+package zfly.yfei.db;
 
 import java.sql.SQLException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-class SQLSaveBuilder implements SQLBuilder {
+class SQLUpdateBuilder extends SQLBuilder {
 
 	private static Logger log = Logger.getLogger(SQLUpdateBuilder.class);
 
+	SQLUpdateBuilder(Object entity, Table table, Where condition) {
+		super(entity, table, condition);
+	}
+
 	@Override
-	public String getSql(Object entity, Table table, Where condition) throws SQLException {
+	String getSql() throws SQLException {
 		try {
 			final StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO ");
+			sql.append("UPDATE ");
 			sql.append(table.getName());
-			sql.append(" (");
+			sql.append(" SET ");
 			for (Column column : table.getColumns()) {
 				if (!table.isPrimaryKey(column)) {
 					sql.append(table.getName());
 					sql.append(".");
 					sql.append(column.getName());
-					sql.append(",");
-				}
-			}
-			sql.delete(sql.length() - 1, sql.length());
-			sql.append(") VALUES (");
-			for (Column column : table.getColumns()) {
-				if (!table.isPrimaryKey(column)) {
-					sql.append("'");
+					sql.append("='");
 					column.getField().setAccessible(true);
 					sql.append(column.getField().get(entity));
 					sql.append("',");
 				}
 			}
 			sql.delete(sql.length() - 1, sql.length());
-			sql.append(")");
 			sql.append(condition.getCondition(table));
 			return sql.toString();
 		} catch (IllegalArgumentException | IllegalAccessException e) {

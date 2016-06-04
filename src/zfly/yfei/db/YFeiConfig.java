@@ -1,4 +1,4 @@
-package zfly;
+package zfly.yfei.db;
 
 public class YFeiConfig {
 
@@ -41,8 +41,8 @@ public class YFeiConfig {
 
 	/**
 	 * 获取数据库名
-	 * 
-	 * @return
+	 *
+	 * @return 数据库名
 	 */
 	public String getDataBase() {
 		return dataBase;
@@ -50,9 +50,9 @@ public class YFeiConfig {
 
 	/**
 	 * 设置数据库名
-	 * 
-	 * @param dataBase
-	 * @return
+	 *
+	 * @param dataBase 数据库名
+	 * @return 配置信息
 	 */
 	public YFeiConfig setDataBase(String dataBase) {
 		this.dataBase = dataBase;
@@ -61,8 +61,8 @@ public class YFeiConfig {
 
 	/**
 	 * 获取数据库连接地址
-	 * 
-	 * @return
+	 *
+	 * @return 数据库连接地址
 	 */
 	public String getUrl() {
 		return url;
@@ -70,9 +70,9 @@ public class YFeiConfig {
 
 	/**
 	 * 设置数据库连接地址
-	 * 
-	 * @param url
-	 * @return
+	 *
+	 * @param url 数据库连接地址
+	 * @return 配置信息
 	 */
 	public YFeiConfig setUrl(String url) {
 		this.url = url;
@@ -81,8 +81,8 @@ public class YFeiConfig {
 
 	/**
 	 * 获取数据库用户名
-	 * 
-	 * @return
+	 *
+	 * @return 配置信息
 	 */
 	public String getUserName() {
 		return userName;
@@ -90,9 +90,9 @@ public class YFeiConfig {
 
 	/**
 	 * 设置数据库用户名
-	 * 
-	 * @param userName
-	 * @return
+	 *
+	 * @param userName 数据库用户名
+	 * @return 配置信息
 	 */
 	public YFeiConfig setUserName(String userName) {
 		this.userName = userName;
@@ -101,8 +101,8 @@ public class YFeiConfig {
 
 	/**
 	 * 获取数据库密码
-	 * 
-	 * @return
+	 *
+	 * @return 数据库密码
 	 */
 	public String getPassWord() {
 		return passWord;
@@ -110,9 +110,9 @@ public class YFeiConfig {
 
 	/**
 	 * 设置数据库密码
-	 * 
-	 * @param passWord
-	 * @return
+	 *
+	 * @param passWord 数据库密码
+	 * @return 配置信息
 	 */
 	public YFeiConfig setPassWord(String passWord) {
 		this.passWord = passWord;
@@ -121,8 +121,8 @@ public class YFeiConfig {
 
 	/**
 	 * 获取连接池大小
-	 * 
-	 * @return
+	 *
+	 * @return 连接池大小
 	 */
 	public int getPoolSize() {
 		return poolSize;
@@ -130,9 +130,9 @@ public class YFeiConfig {
 
 	/**
 	 * 设置连接池大小
-	 * 
-	 * @param poolSize
-	 * @return
+	 *
+	 * @param poolSize 连接池大小
+	 * @return 配置信息
 	 */
 	public YFeiConfig setPoolSize(int poolSize) {
 		this.poolSize = poolSize;
@@ -141,8 +141,8 @@ public class YFeiConfig {
 
 	/**
 	 * 查询是否打印SQL语句
-	 * 
-	 * @return
+	 *
+	 * @return 是否打印SQL语句
 	 */
 	public boolean isShowSql() {
 		return showSql;
@@ -150,9 +150,9 @@ public class YFeiConfig {
 
 	/**
 	 * 设置是否打印SQL语句
-	 * 
-	 * @param showSql
-	 * @return
+	 *
+	 * @param showSql 是否打印SQL语句
+	 * @return 配置信息
 	 */
 	public YFeiConfig setShowSql(boolean showSql) {
 		this.showSql = showSql;

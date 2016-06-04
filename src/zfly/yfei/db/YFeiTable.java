@@ -1,4 +1,4 @@
-package zfly;
+package zfly.yfei.db;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,6 +13,6 @@ public @interface YFeiTable {
 	 * 
 	 * @return
 	 */
-	public String value() default "";
+	String value() default "";
 
 }

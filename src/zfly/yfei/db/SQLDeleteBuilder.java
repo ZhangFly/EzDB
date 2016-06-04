@@ -1,11 +1,15 @@
-package zfly;
+package zfly.yfei.db;
 
 import java.sql.SQLException;
 
-class SQLDeleteBuilder implements SQLBuilder {
+class SQLDeleteBuilder extends SQLBuilder {
+
+	SQLDeleteBuilder(Object entity, Table table, Where condition) {
+		super(entity, table, condition);
+	}
 
 	@Override
-	public String getSql(Object entity, Table table, Where condition) throws SQLException {
+	String getSql() throws SQLException {
 
 		final StringBuilder sql = new StringBuilder();
 		sql.append("DELETE FROM ");

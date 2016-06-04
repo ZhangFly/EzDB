@@ -1,4 +1,4 @@
-package zfly;
+package zfly.yfei.db;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,19 +13,19 @@ public @interface YFeiColumn {
 	 * 
 	 * @return
 	 */
-	public String alias() default "";
+	String alias() default "";
 
 	/**
 	 * 标记该属性是否为数据库表主键，数据库表主键应该有唯一注解，请勿对同一实体类重复标记
 	 * 
 	 * @return
 	 */
-	public boolean primaryKey() default false;
+	boolean primaryKey() default false;
 
 	/**
 	 * 不映射该属性到数据库表
 	 * 
 	 * @return
 	 */
-	public boolean ignore() default false;
+	boolean ignore() default false;
 }

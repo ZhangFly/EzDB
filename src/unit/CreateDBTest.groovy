@@ -1,7 +1,7 @@
 package unit
 
-import zfly.YFeiConfig
-import zfly.YFeiDB
+import zfly.yfei.db.YFeiConfig
+import zfly.yfei.db.YFeiDB
 
 import java.sql.SQLException
 
@@ -22,7 +22,7 @@ class CreateDBTest extends GroovyTestCase{
             YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL"));
         }
         shouldFail(SQLException) {
-            YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")).setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
+            YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
         }
         assertNotNull(YFeiDB.createDB(new YFeiConfig()
                 .setDataBase("MySQL")

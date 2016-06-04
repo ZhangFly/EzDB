@@ -1,4 +1,4 @@
-package zfly;
+package zfly.yfei.db;
 
 import java.sql.SQLException;
 import java.util.regex.Matcher;
@@ -27,10 +27,10 @@ public class Where {
 
 	/**
 	 * 构建一个空的限定条件
-	 * 
-	 * @return
+	 *
+	 * @return where生成类
 	 */
-	public static Where emptyWhere() {
+	static Where emptyWhere() {
 		return new Where(null);
 	}
 
@@ -76,7 +76,7 @@ public class Where {
 		return sql + ";";
 	}
 
-	static Where shrotcutForId(final Object entity, final Table table) {
+	static Where shortcutForId(final Object entity, final Table table) {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
@@ -85,9 +85,9 @@ public class Where {
 
 			primaryKey.getField().setAccessible(true);
 			if (primaryKey.getField().getType().isPrimitive()) {
-				return shrotcutForId(primaryKey.getField().getInt(entity), table);
+				return shortcutForId(primaryKey.getField().getInt(entity), table);
 			} else {
-				return shrotcutForId(((Integer) primaryKey.getField().get(entity)).intValue(), table);
+				return shortcutForId(((Integer) primaryKey.getField().get(entity)).intValue(), table);
 			}
 
 		} catch (IllegalAccessException e) {
@@ -96,7 +96,7 @@ public class Where {
 		}
 	}
 
-	static Where shrotcutForId(final int id, final Table table) {
+	static Where shortcutForId(final int id, final Table table) {
 
 		if (table == null) {
 			return Where.emptyWhere();

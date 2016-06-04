@@ -1,28 +1,20 @@
 package unit;
 
 import model.Person;
+import zfly.yfei.db.YFeiConfig;
+import zfly.yfei.db.YFeiDB;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
-public class TestExpectUtils {
+public class TestUtils {
 
 	public static Person EXPECT_1 = null;
 	public static Person EXPECT_2 = null;
 	final public static Person EXPECT_ARRAY[] = new Person[2];
+	public static YFeiDB MySQL = null;
+
 
 	static {
-		init();
-	}
-
-	private TestExpectUtils() {
-	}
-
-	public static void reset() {
-		init();
-	}
-
-	private static void init() {
 		EXPECT_1 = new Person();
 		EXPECT_1.setId(1);
 		EXPECT_1.setName("ZFly");
@@ -37,6 +29,19 @@ public class TestExpectUtils {
 		EXPECT_2.setIntro("SB*1");
 		EXPECT_ARRAY[0] = EXPECT_1;
 		EXPECT_ARRAY[1] = EXPECT_2;
+
+		try {
+			MySQL = YFeiDB.createDB(new YFeiConfig()
+					.setDataBase("MySQL")
+					.setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8")
+					.setUserName("root")
+					.setPassWord("123456")
+					.setPoolSize(1)
+					.setShowSql(true));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

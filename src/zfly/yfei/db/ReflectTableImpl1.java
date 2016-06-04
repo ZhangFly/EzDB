@@ -1,4 +1,4 @@
-package zfly;
+package zfly.yfei.db;
 
 import java.lang.reflect.Field;
 
@@ -29,7 +29,7 @@ class ReflectTableImpl1 extends ReflectTableStrategy {
 	}
 
 	private void reflectTableName(final Class<?> clazz) {
-		String tableName = StringUtils.EMPTY;
+		String tableName;
 		if (clazz.isAnnotationPresent(YFeiTable.class)) {
 			tableName = clazz.getAnnotation(YFeiTable.class).value();
 		} else {
@@ -39,15 +39,11 @@ class ReflectTableImpl1 extends ReflectTableStrategy {
 	}
 
 	private void reflectColumnName(final YFeiColumn additionInfo, final Field f, final Class<?> clazz) {
-		String columnName = StringUtils.EMPTY;
+		String columnName;
 		if (additionInfo == null) {
 			columnName = f.getName();
 		} else {
-			if (!StringUtils.equals(additionInfo.alias(), "")) {
-				columnName = additionInfo.alias();
-			} else {
-				columnName = f.getName();
-			}
+			columnName = StringUtils.equals(additionInfo.alias(), "") ? f.getName() : additionInfo.alias();
 		}
 		notifyGotColumnName(columnName, f, clazz);
 	}
@@ -59,7 +55,7 @@ class ReflectTableImpl1 extends ReflectTableStrategy {
 		if (!additionInfo.primaryKey()) {
 			return;
 		}
-		String primaryKey = StringUtils.EMPTY;
+		String primaryKey;
 		if (!StringUtils.equals(additionInfo.alias(), "")) {
 			primaryKey = additionInfo.alias();
 		} else {
