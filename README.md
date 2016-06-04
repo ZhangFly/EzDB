@@ -18,6 +18,7 @@ YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对�
 ###创建一个数据库对象：
 
 ```java
+try {
 	final YFeiDB mysql = YFeiDB.createDB(new YFeiDBConfig()
 				.setDataBase("MySQL")
 				.setUrl("jdbc:mysql://xxxx")
@@ -25,6 +26,8 @@ YFeiDB是一个简单封装JDBC操作的模块。可以通过使用注解和对�
 				.setPassWord("xxxx")
 				.setPoolSize(1)
 				.setShowSql(true));
+}catch (SQLException e) {
+}
 ```
 
 ###使用注解：
@@ -50,73 +53,88 @@ public class Student {
 ###查询操作：
 
 ```java
-// 从数据库中获取所有Student对象
-// sql: SELECT * FROM Student;
-final List<Student> students = mysql.find(Student.class);
+try {
+	// 从数据库中获取所有Student对象
+	// sql: SELECT * FROM Student;
+	final List<Student> students = mysql.find(Student.class);
 
-// 从数据库中获取id为1的Student对象
-// sql: SELECT * FROM Student WHERE Student.id='1';
-final Student student = mysql.find(Student.class, 1);
+	// 从数据库中获取id为1的Student对象
+	// sql: SELECT * FROM Student WHERE Student.id='1';
+	final Student student = mysql.find(Student.class, 1);
 
-// 从数据库中获取所有id>1的Student对象
-// sql: SELECT * FROM Student WHERE Student.id>'1';
-final List<Student> students1 = mysql.find(Student.class, new Where("$1>$c", 1));
+	// 从数据库中获取所有id>1的Student对象
+	// sql: SELECT * FROM Student WHERE Student.id>'1';
+	final List<Student> students1 = mysql.find(Student.class, new Where("$1>$c", 1));
+}catch (SQLException e) {
+}
 ```
 
 ###指定查询条件：
 类Where，该类通过占位符来指定实体类的查询条件：
 
 ```java
-// t 将会替换为表名 Student，$C 将会替换为可变参数的值 1
-// sql: SELECT * FROM Student WHERE Student.id>'1';
-YFeiDB.find(Student.class, new Where("t.id>$c", 1));
+try {
+	// t 将会替换为表名 Student，$C 将会替换为可变参数的值 1
+	// sql: SELECT * FROM Student WHERE Student.id>'1';
+	YFeiDB.find(Student.class, new Where("t.id>$c", 1));
 
-// t 将会替换为表名 Student, $1 将会替换为Student的第一个非忽略属性对应的列名 id，$C 将会替换为可变参数的值 1
-// sql: SELECT * FROM Student WHERE Student.id>'1';
-YFeiDB.find(Student.class, new Where("t.$1>$c", 1));
+	// t 将会替换为表名 Student, $1 将会替换为Student的第一个非忽略属性对应的列名 id，$C 将会替换为可变参数的值 1
+	// sql: SELECT * FROM Student WHERE Student.id>'1';
+	YFeiDB.find(Student.class, new Where("t.$1>$c", 1));
 
-// $1 将会替换为表名 Student + "." + 第一个非忽略属性对应的列名 id，$C 将会替换为可变参数的值 1
-// sql: SELECT * FROM Student WHERE Student.id>'1';
-YFeiDB.find(Student.class, new Where("$1>$c", 1));
+	// $1 将会替换为表名 Student + "." + 第一个非忽略属性对应的列名 id，$C 将会替换为可变参数的值 1
+	// sql: SELECT * FROM Student WHERE Student.id>'1';
+	YFeiDB.find(Student.class, new Where("$1>$c", 1));
+}catch (SQLException e) {
+}
 ```
 
 ###保存操作：
 
 ```java
-final Student student = new Student();
-student.setName("xx");
-// 保存Student对象到数据库
-// sql: INSERT INTO Student (Student.name) VALUES ('xx');
-mysql.save(student);
+try {
+	final Student student = new Student();
+	student.setName("xx");
+	// 保存Student对象到数据库
+	// sql: INSERT INTO Student (Student.name) VALUES ('xx');
+	mysql.save(student);
+	}catch(SQLException e) {
+}
 ```
 ###删除操作：
 
 ```java
-final Student student = new Student();
-student.setId(1);
-// 删除数据库Student对象
-// sql: DELETE FROM Student WHERE Student.id='1';
-mysql.delete(student);
+try {
+	final Student student = new Student();
+	student.setId(1);
+	// 删除数据库Student对象
+	// sql: DELETE FROM Student WHERE Student.id='1';
+	mysql.delete(student);
 
-// 删除数据库Student对象
-// sql: DELETE FROM Student WHERE Student.name='xx';
-mysql.delete(Student.class, new Where("$2='xx'"));
+	// 删除数据库Student对象
+	// sql: DELETE FROM Student WHERE Student.name='xx';
+	mysql.delete(Student.class, new Where("$2='xx'"));
+}catch (SQLException e) {
+}
 ```
 
 ###更新操作：
 
 ```java
-final Student student = new Student();
-student.setId(1);
-student.setName("xx");
-// 更新数据库Student对象
-// sql: UPDATE Student SET Student.name='xx' WHERE Student.id='1';
-mysql.update(student);
+try {
+	final Student student = new Student();
+	student.setId(1);
+	student.setName("xx");
+	// 更新数据库Student对象
+	// sql: UPDATE Student SET Student.name='xx' WHERE Student.id='1';
+	mysql.update(student);
 
-student.setName("oo");
-// 更新数据库Student对象
-// sql: UPDATE Student SET Student.name='oo' WHERE Student.name='xx';
-mysql.delete(Student.class, new Where("$2='xx'"));
+	student.setName("oo");
+	// 更新数据库Student对象
+	// sql: UPDATE Student SET Student.name='oo' WHERE Student.name='xx';
+	mysql.delete(Student.class, new Where("$2='xx'"));
+}catch (Exception e) {
+}
 ```
 
 ## PS
