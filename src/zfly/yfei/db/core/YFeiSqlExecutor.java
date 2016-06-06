@@ -57,7 +57,7 @@ public class YFeiSQLExecutor {
             if (StringUtils.containsIgnoreCase(sql, "select")) {
                 final ResultSet res = stat.executeQuery(sql);
                 if (handler != null) {
-                    handler.onDone(res);
+                    handler.onSuccess(res);
                 }
             } else {
                 stat.execute(sql);

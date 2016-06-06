@@ -6,30 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5d0caa1-e4cf-4981-a1d7-e72982971554" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/Person.java" afterPath="$PROJECT_DIR$/src/unit/Person.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Condition.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Condition.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Distinct.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Distinct.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Group.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Group.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Having.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Having.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Order.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Order.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Union.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Union.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/condition/Where.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Where.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/core/helper/SimpleConnectionPool.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/helper/SimpleConnectionPool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/unit/CreateSQLExecutorTest.groovy" afterPath="$PROJECT_DIR$/src/unit/CreateSQLExecutorTest.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/unit/FindTest.groovy" afterPath="$PROJECT_DIR$/src/unit/FindTest.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/unit/SaveAndDeleteTest.groovy" afterPath="$PROJECT_DIR$/src/unit/SaveAndDeleteTest.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/unit/TestUtils.java" afterPath="$PROJECT_DIR$/src/unit/TestUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/unit/UpdateTest.groovy" afterPath="$PROJECT_DIR$/src/unit/UpdateTest.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiDB.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiDB.java" />
+    <list default="true" id="f5d0caa1-e4cf-4981-a1d7-e72982971554" name="Default" comment="拓展了Handler类,为异步操作">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSqlExecutor.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSqlExecutor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/core/handler/YFeiDBSqlExecutorHandler.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/core/handler/YFeiDBSqlExecutorHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLBuilder.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLDeleteBuilder.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLDeleteBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLFindBuilder.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLFindBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLSaveBuilder.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLSaveBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLUpdateBuilder.java" afterPath="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLUpdateBuilder.java" />
     </list>
     <ignored path="YFeiDB.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,108 +31,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SQLUpdateBuilder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLUpdateBuilder.java">
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="YFeiConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiConfig.java">
+      <file leaf-file-name="YFeiSQLExecutor.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSQLExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-209">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FindTest.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/unit/FindTest.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/unit/TestUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UpdateTest.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/unit/UpdateTest.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CreateDBTest.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/unit/CreateDBTest.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="YFeiDB.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiDB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2552">
-              <caret line="178" column="5" selection-start-line="178" selection-start-column="5" selection-end-line="178" selection-end-column="5" />
+            <state relative-caret-position="440">
+              <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Condition.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Condition.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Where.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Where.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1144">
-              <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="YFeiDBSqlExecutorHandler.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/handler/YFeiDBSqlExecutorHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="13" column="19" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="19" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -169,6 +64,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="YFei &lt;z.outstanding@outlook.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -220,8 +120,6 @@
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/condition/Having.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/condition/Union.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/condition/Condition.java" />
-        <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSqlExecutor.java" />
-        <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSQLExecutor.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLDeleteBuilder.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLFindBuilder.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLSaveBuilder.java" />
@@ -230,6 +128,8 @@
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiDB.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Condition.java" />
         <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/handler/YFeiDBSqlExecutorHandler.java" />
+        <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSqlExecutor.java" />
+        <option value="$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSQLExecutor.java" />
       </list>
     </option>
   </component>
@@ -331,6 +231,28 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="YFeiDB" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="YFeiDB" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -360,9 +282,10 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="FullScreen" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Groovy JUnit" />
+    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -945,7 +868,7 @@
       <option name="presentableId" value="Default" />
       <updated>1464933771036</updated>
       <workItem from="1464933774225" duration="20574000" />
-      <workItem from="1465180791148" duration="11813000" />
+      <workItem from="1465180791148" duration="12779000" />
     </task>
     <task id="LOCAL-00001" summary="重构了单元测试">
       <created>1464944798392</created>
@@ -989,7 +912,14 @@
       <option name="project" value="LOCAL" />
       <updated>1465189276639</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="拓展了Handler类,为异步操作">
+      <created>1465219388785</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1465219388785</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1025,7 +955,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32387000" />
+    <option name="totallyTimeSpent" value="33353000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="0" width="1920" height="1080" extended-state="0" />
@@ -1036,20 +966,20 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23493975" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.5021299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26930693" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885906" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32970297" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26930693" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871288" sideWeight="0.4978701" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18903089" sideWeight="0.48730963" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18903089" sideWeight="0.48153618" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32673267" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24248926" sideWeight="0.51269037" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18903089" sideWeight="0.5184638" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1059,6 +989,14 @@
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2841584" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -1074,7 +1012,8 @@
     <MESSAGE value="更新README.md" />
     <MESSAGE value="更新README.md,并导出最新jar包" />
     <MESSAGE value="重新梳理了一下包结构" />
-    <option name="LAST_COMMIT_MESSAGE" value="重新梳理了一下包结构" />
+    <MESSAGE value="拓展了Handler类,为异步操作" />
+    <option name="LAST_COMMIT_MESSAGE" value="拓展了Handler类,为异步操作" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1085,7 +1024,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/zfly/builder/SQLUpdateBuilder.java" />
     <entry file="file://$PROJECT_DIR$/src/zfly/builder/SQLBuilder.java" />
     <entry file="file://$PROJECT_DIR$/src/zfly/zfly/model/Column.java" />
     <entry file="file://$PROJECT_DIR$/src/zfly/zfly/model/Table.java" />
@@ -1209,7 +1147,7 @@
         <state relative-caret-position="40">
           <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1267,9 +1205,9 @@
         <state relative-caret-position="154">
           <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#234#235#0" expanded="true" />
-            <element signature="e#266#267#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#234#235#0" expanded="false" />
+            <element signature="e#266#267#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1279,9 +1217,9 @@
         <state relative-caret-position="154">
           <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#228#229#0" expanded="true" />
-            <element signature="e#260#261#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#228#229#0" expanded="false" />
+            <element signature="e#260#261#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1291,9 +1229,9 @@
         <state relative-caret-position="154">
           <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#229#230#0" expanded="true" />
-            <element signature="e#261#262#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#229#230#0" expanded="false" />
+            <element signature="e#261#262#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1303,7 +1241,7 @@
         <state relative-caret-position="396">
           <caret line="20" column="84" selection-start-line="20" selection-start-column="84" selection-end-line="20" selection-end-column="84" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1313,9 +1251,9 @@
         <state relative-caret-position="154">
           <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#228#229#0" expanded="true" />
-            <element signature="e#260#261#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#228#229#0" expanded="false" />
+            <element signature="e#260#261#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1335,16 +1273,6 @@
         <state relative-caret-position="88">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSQLExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1378,10 +1306,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLUpdateBuilder.java">
+    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/handler/YFeiDBSqlExecutorHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
+        <state relative-caret-position="242">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Where.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1144">
+          <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Condition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2552">
+          <caret line="178" column="5" selection-start-line="178" selection-start-column="5" selection-end-line="178" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/unit/CreateDBTest.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/unit/UpdateTest.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/unit/TestUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1402,65 +1384,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/unit/TestUtils.java">
+    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/sql/builder/SQLUpdateBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+        <state relative-caret-position="374">
+          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/unit/UpdateTest.groovy">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/unit/CreateDBTest.groovy">
+    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiSQLExecutor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/YFeiDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2552">
-          <caret line="178" column="5" selection-start-line="178" selection-start-column="5" selection-end-line="178" selection-end-column="5" />
+        <state relative-caret-position="440">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Condition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/condition/Where.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/zfly/yfei/db/core/handler/YFeiDBSqlExecutorHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
