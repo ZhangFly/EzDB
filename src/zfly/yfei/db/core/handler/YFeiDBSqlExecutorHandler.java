@@ -11,6 +11,16 @@ public abstract class YFeiDBSqlExecutorHandler {
 	 * 
 	 * @param result
 	 */
-	public abstract void onDone(@Nullable final ResultSet result);
+	public void onSuccess(final ResultSet result) {
+
+	}
+
+	/**
+	 * 执行完成后回调该方法
+	 *
+	 */
+	public void onFailure() {
+
+	}
 
 }
