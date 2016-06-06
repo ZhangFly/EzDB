@@ -12,7 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import zfly.yfei.db.condition.Where;
+import zfly.yfei.db.core.condition.Condition;
+import zfly.yfei.db.core.condition.Where;
 import zfly.yfei.db.core.handler.YFeiDBSqlExecutorHandler;
 import zfly.yfei.db.model.Column;
 import zfly.yfei.db.sql.builder.*;
@@ -34,7 +35,7 @@ public class YFeiDB {
 	private static Logger log = Logger.getLogger(YFeiDB.class);
 
 	private YFeiConfig config;
-	private YFeiSqlExecutor sqlExecutor;
+	private YFeiSQLExecutor sqlExecutor;
 	private Map<String, Table> tables = new HashMap<>();
 
 	// 加载log4j配置
@@ -89,7 +90,7 @@ public class YFeiDB {
 	 * @return SQL执行器
 	 * @throws SQLException
 	 */
-	public static YFeiSqlExecutor createSQLExecutor(final YFeiConfig config) throws SQLException {
+	public static YFeiSQLExecutor createSQLExecutor(final YFeiConfig config) throws SQLException {
 
 		if (config == null) {
 			throw new SQLException("Config must be not null!!");
@@ -104,50 +105,24 @@ public class YFeiDB {
 			}
 		}
 
-		return new YFeiSqlExecutor(config.getPoolSize(), config.getUrl(), config.getUserName(), config.getPassWord());
-	}
-
-	/**
-	 * 查询实体类对应的所有数据库表记录
-	 *
-	 * @param clazz 实体类类型
-	 * @return 所有数据库记录对应的实体类的链表
-	 * @throws SQLException
-	 */
-	public <T> List<T> find(Class<T> clazz) throws SQLException {
-		return find(clazz, Where.emptyWhere());
-	}
-
-	/**
-	 * 查询指定主键的实体类对应的数据库表记录
-	 *
-	 * @param clazz 实体类类型
-	 * @param id 主键
-	 * @return 数据库记录对应实体类, 未查询到则返还null
-	 * @throws SQLException
-	 */
-	public <T> T find(Class<T> clazz, final int id) throws SQLException {
-		final Table table = getTableForClass(clazz);
-		final List<T> res = find(clazz, Where.shortcutForId(id, table));
-		return res.isEmpty() ? null : res.get(0);
+		return new YFeiSQLExecutor(config.getPoolSize(), config.getUrl(), config.getUserName(), config.getPassWord());
 	}
 
 	/**
 	 * 查询指定条件的实体类对应的数据库表记录
 	 *
 	 * @param clazz 实体类
-	 * @param condition 主键
+	 * @param conditions 查询条件
 	 * @return 所有满足添加的数据库记录对应的实体类的链表
 	 * @throws SQLException
 	 */
-	public <T> List<T> find(Class<T> clazz, final Where condition) throws SQLException {
+	public <T> List<T> find(Class<T> clazz, final Condition... conditions) throws SQLException {
 
 		final Table table = getTableForClass(clazz);
 		final List<Column> columns = table.getColumns();
 		final List<T> resList = new ArrayList<>();
 
-
-		executeSQL(new SQLFindBuilder(null, table, condition == null ? Where.emptyWhere() : condition), result -> {
+		executeSQL(new SQLFindBuilder(null, table, conditions), result -> {
 			final ReverseTableStrategy reverse = new ReverseTableImpl1(new ReverseTableDelegate() {
 
 				@Override
@@ -185,22 +160,34 @@ public class YFeiDB {
 	}
 
 	/**
+	 * 查询指定主键的实体类对应的数据库表记录
+	 *
+	 * @param clazz 实体类类型
+	 * @param id 主键
+	 * @return 数据库记录对应实体类, 未查询到则返还null
+	 * @throws SQLException
+	 */
+	public <T> T find(Class<T> clazz, final int id) throws SQLException {
+		final Table table = getTableForClass(clazz);
+		final List<T> res = find(clazz, Where.shortcutForId(id, table));
+		return res.isEmpty() ? null : res.get(0);
+	}
+
+	/**
 	 * 将实体类保存到数据库，如果实体类不对应数据库操作则忽略
 	 * 
-	 * @param entity
-	 *            实体类
+	 * @param entity 实体类
 	 * @throws SQLException
 	 */
 	public <T> void save(final T entity) throws SQLException {
 		final Table table = getTableForClass(entity);
-		executeSQL(new SQLSaveBuilder(entity, table, Where.emptyWhere()));
+		executeSQL(new SQLSaveBuilder(entity, table));
 	}
 
 	/**
 	 * 更新实体类对应的数据库表，实体类的主键将用来作为指定条件
 	 * 
-	 * @param entity
-	 *            实体类
+	 * @param entity 实体类
 	 * @throws SQLException
 	 */
 	public void update(final Object entity) throws SQLException {
@@ -213,14 +200,14 @@ public class YFeiDB {
 	 * 
 	 * @param entity
 	 *            实体类
-	 * @param condition
+	 * @param conditions
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void update(final Object entity, final Where condition) throws SQLException {
+	public void update(final Object entity, final Condition... conditions) throws SQLException {
 		final Table table = getTableForClass(entity);
 		executeSQL(new SQLUpdateBuilder(entity, table,
-				condition == null ? Where.emptyWhere() : condition));
+				conditions));
 	}
 
 	/**
@@ -240,13 +227,13 @@ public class YFeiDB {
 	 * 
 	 * @param clazz
 	 *            实体类
-	 * @param condition
+	 * @param conditions
 	 *            指定条件
 	 * @throws SQLException
 	 */
-	public void delete(final Class<?> clazz, final Where condition) throws SQLException {
+	public void delete(final Class<?> clazz, final Condition... conditions) throws SQLException {
 		final Table table = getTableForClass(clazz);
-		executeSQL(new SQLDeleteBuilder(null, table, condition));
+		executeSQL(new SQLDeleteBuilder(null, table, conditions));
 	}
 
 	private void executeSQL(final SQLBuilder sqlBuilder) throws SQLException {

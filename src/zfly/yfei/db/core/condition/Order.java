@@ -1,4 +1,4 @@
-package zfly.yfei.db.condition;
+package zfly.yfei.db.core.condition;
 
 import org.apache.commons.lang3.StringUtils;
 import zfly.yfei.db.model.Table;

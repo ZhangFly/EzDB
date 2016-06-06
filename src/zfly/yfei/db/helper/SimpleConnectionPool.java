@@ -1,4 +1,4 @@
-package zfly.yfei.db.core.helper;
+package zfly.yfei.db.helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

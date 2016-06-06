@@ -1,7 +1,7 @@
 package zfly.yfei.db.sql.builder;
 
 import zfly.yfei.db.model.Table;
-import zfly.yfei.db.condition.Condition;
+import zfly.yfei.db.core.condition.Condition;
 
 import java.sql.SQLException;
 

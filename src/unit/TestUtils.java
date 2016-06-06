@@ -1,6 +1,5 @@
 package unit;
 
-import model.Person;
 import zfly.yfei.db.core.YFeiConfig;
 import zfly.yfei.db.core.YFeiDB;
 

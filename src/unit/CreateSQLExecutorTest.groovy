@@ -2,7 +2,7 @@ package unit
 
 import zfly.yfei.db.core.YFeiConfig
 import zfly.yfei.db.core.YFeiDB
-import zfly.yfei.db.core.YFeiSqlExecutor
+import zfly.yfei.db.core.YFeiSQLExecutor
 
 import java.sql.SQLException
 
@@ -24,7 +24,7 @@ class CreateSQLExecutorTest extends GroovyTestCase {
         shouldFail(SQLException) {
             YFeiDB.createSQLExecutor(new YFeiConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
         }
-        final YFeiSqlExecutor executor = YFeiDB.createSQLExecutor(new YFeiConfig().setDataBase("MySQL")
+        final YFeiSQLExecutor executor = YFeiDB.createSQLExecutor(new YFeiConfig().setDataBase("MySQL")
                 .setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
                 .setPassWord("123456").setPoolSize(1).setShowSql(true));
         assertNotNull(executor)

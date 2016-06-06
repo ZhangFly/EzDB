@@ -4,13 +4,13 @@ import java.sql.ResultSet;
 
 import com.sun.istack.internal.Nullable;
 
-public interface YFeiDBSqlExecutorHandler {
+public abstract class YFeiDBSqlExecutorHandler {
 
 	/**
 	 * 执行完成后回调该方法
 	 * 
 	 * @param result
 	 */
-	void onDone(@Nullable final ResultSet result);
+	public abstract void onDone(@Nullable final ResultSet result);
 
 }

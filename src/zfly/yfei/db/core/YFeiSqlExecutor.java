@@ -8,16 +8,16 @@ import java.sql.Statement;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import zfly.yfei.db.core.handler.YFeiDBSqlExecutorHandler;
-import zfly.yfei.db.core.helper.SimpleConnectionPool;
+import zfly.yfei.db.helper.SimpleConnectionPool;
 
 /**
  * 简单SQL语句执行器，内部维持有简单连接池
  *
  * @author YFei
  */
-public class YFeiSqlExecutor {
+public class YFeiSQLExecutor {
 
-    private static Logger log = Logger.getLogger(YFeiSqlExecutor.class);
+    private static Logger log = Logger.getLogger(YFeiSQLExecutor.class);
     private SimpleConnectionPool pool;
 
     /**
@@ -29,7 +29,7 @@ public class YFeiSqlExecutor {
      * @param pwd  数据库密码
      * @throws SQLException
      */
-    YFeiSqlExecutor(final int size, final String url, final String usr, final String pwd) throws SQLException {
+    YFeiSQLExecutor(final int size, final String url, final String usr, final String pwd) throws SQLException {
         pool = new SimpleConnectionPool(size, url, usr, pwd);
     }
 

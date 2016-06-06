@@ -1,7 +1,6 @@
 package unit
 
-import model.Person
-import zfly.yfei.db.condition.Where
+import zfly.yfei.db.core.condition.Where
 
 import java.sql.SQLException
 

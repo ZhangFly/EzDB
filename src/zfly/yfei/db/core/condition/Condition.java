@@ -1,4 +1,4 @@
-package zfly.yfei.db.condition;
+package zfly.yfei.db.core.condition;
 
 import zfly.yfei.db.model.Column;
 import zfly.yfei.db.model.Table;
@@ -17,9 +17,10 @@ public abstract class Condition {
 
     Condition(final String fmt, final Object... args) {
         sql = fmt == null ? "" : fmt;
-        for (Object arg : args) {
-            sql = sql.replaceFirst("\\$c", "'" + arg + "'");
-        }
+        if (args != null)
+            for (Object arg : args) {
+                sql = sql.replaceFirst("\\$c", "'" + arg + "'");
+            }
     }
 
     String parsePlaceholder(final Table table) throws SQLException {

@@ -1,4 +1,4 @@
-package zfly.yfei.db.condition;
+package zfly.yfei.db.core.condition;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -26,15 +26,6 @@ public class Where extends Condition {
 	final private static Logger log = Logger.getLogger(Where.class);
 
 	/**
-	 * 构建一个空的限定条件
-	 *
-	 * @return where生成类
-	 */
-	public static Where emptyWhere() {
-		return new Where(null);
-	}
-
-	/**
 	 * 构造限定条件
 	 * 
 	 * @param fmt
@@ -58,7 +49,7 @@ public class Where extends Condition {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
-				return Where.emptyWhere();
+				return null;
 			}
 
 			primaryKey.getField().setAccessible(true);
@@ -70,19 +61,19 @@ public class Where extends Condition {
 
 		} catch (IllegalAccessException e) {
 			log.error(e.getMessage());
-			return Where.emptyWhere();
+			return null;
 		}
 	}
 
 	public static Where shortcutForId(final int id, final Table table) {
 
 		if (table == null) {
-			return Where.emptyWhere();
+			return null;
 		}
 
 		final Column primaryKey = table.getPrimaryKey();
 		if (primaryKey == null) {
-			return Where.emptyWhere();
+			return null;
 		}
 
 		return new Where(table.getName() + "." + primaryKey.getName() + "=$c", id);

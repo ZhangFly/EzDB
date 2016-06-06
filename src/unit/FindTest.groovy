@@ -1,7 +1,6 @@
 package unit
 
-import model.Person
-import zfly.yfei.db.condition.Where
+import zfly.yfei.db.core.condition.Where
 
 import java.sql.SQLException
 
@@ -15,7 +14,7 @@ class FindTest extends GroovyTestCase {
         final List<Person> right = TestUtils.MySQL.find(Person.class);
         assertArrayEquals(TestUtils.EXPECT_ARRAY, right.toArray());
 
-        shouldFail(SQLException) {
+        shouldFail(NullPointerException) {
             TestUtils.MySQL.find(null);
         }
     }
@@ -54,7 +53,7 @@ class FindTest extends GroovyTestCase {
         assertEquals(TestUtils.EXPECT_2, right9.get(0));
         final List<Person> right10 = TestUtils.MySQL.find(Person.class, new Where("\$1=\$c AND \$2=\$c", 1, "ZFly"));
         assertEquals(TestUtils.EXPECT_1, right10.get(0));
-        final List<Person> right11 = TestUtils.MySQL.find(Person.class, null);
+        final List<Person> right11 = TestUtils.MySQL.find(Person.class);
         assertArrayEquals(TestUtils.EXPECT_ARRAY, right11.toArray());
         // 数据库中无记录
         final List<Person> right12 = TestUtils.MySQL.find(Person.class, new Where("\$1>\$c", 2));
@@ -70,9 +69,6 @@ class FindTest extends GroovyTestCase {
         }
         shouldFail(Exception) {
             TestUtils.MySQL.find(null, new Where("\$1=\$c", 1));
-        }
-        shouldFail(Exception) {
-            TestUtils.MySQL.find(null, null);
         }
     }
 }
