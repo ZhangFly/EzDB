@@ -1,4 +1,4 @@
-package zfly.yfei.db;
+package zfly.yfei.db.core.helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +13,12 @@ import org.apache.log4j.Logger;
  *
  * @author YFei
  */
-class SimpleConnectionPool {
+public class SimpleConnectionPool {
 
     private static Logger log = Logger.getLogger(SimpleConnectionPool.class);
     private Map<Connection, Boolean> pool;
 
-    SimpleConnectionPool(final int size, final String url, final String usr, final String pwd)
+    public SimpleConnectionPool(final int size, final String url, final String usr, final String pwd)
             throws SQLException {
         this.pool = new HashMap<>(size);
         for (int i = 0; i < size; i++) {
@@ -28,7 +28,7 @@ class SimpleConnectionPool {
         log.debug(String.format("Created %dsh connection into pool!!", size));
     }
 
-    void release(final Connection connection) {
+    public void release(final Connection connection) {
         if (!pool.containsKey(connection)) {
             return;
         }
@@ -39,7 +39,7 @@ class SimpleConnectionPool {
         pool.put(connection, false);
     }
 
-    Connection request() throws SQLException {
+    public Connection request() throws SQLException {
         for (Map.Entry<Connection, Boolean> entry : pool.entrySet()) {
             if (!entry.getValue()) {
                 pool.put(entry.getKey(), true);

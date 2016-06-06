@@ -1,20 +1,22 @@
-package zfly.yfei.db;
+package zfly.yfei.db.sql.builder;
 
 import java.sql.SQLException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import zfly.yfei.db.model.Table;
+import zfly.yfei.db.condition.Condition;
 
-class SQLSaveBuilder extends SQLBuilder {
+public class SQLSaveBuilder extends SQLBuilder {
 
 	private static Logger log = Logger.getLogger(SQLUpdateBuilder.class);
 
-	SQLSaveBuilder(Object entity, Table table, Where condition) {
-		super(entity, table, condition);
+	public SQLSaveBuilder(Object entity, Table table, Condition... conditions) {
+		super(entity, table, conditions);
 	}
 
 	@Override
-	String getSql() throws SQLException {
+	public String getSql() throws SQLException {
 		try {
 			final StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO ");
@@ -45,7 +47,10 @@ class SQLSaveBuilder extends SQLBuilder {
 
 			sql.delete(sql.length() - 1, sql.length());
 			sql.append(")");
-			sql.append(condition.getCondition(table));
+			for (Condition condition : conditions) {
+				sql.append(condition.getCondition(table));
+			}
+			sql.append(";");
 			return sql.toString();
 		} catch (IllegalArgumentException e) {
 			log.error(e.getMessage());

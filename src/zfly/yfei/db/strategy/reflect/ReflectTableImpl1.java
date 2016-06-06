@@ -1,10 +1,12 @@
-package zfly.yfei.db;
+package zfly.yfei.db.strategy.reflect;
 
 import java.lang.reflect.Field;
 
 import org.apache.commons.lang3.StringUtils;
+import zfly.yfei.db.core.annotation.YFeiTable;
+import zfly.yfei.db.core.annotation.YFeiColumn;
 
-class ReflectTableImpl1 extends ReflectTableStrategy {
+public class ReflectTableImpl1 extends ReflectTableStrategy {
 
 	@Override
 	public void doReflect(Class<?> clazz) {

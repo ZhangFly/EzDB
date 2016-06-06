@@ -1,19 +1,19 @@
-package zfly.yfei.db;
+package zfly.yfei.db.strategy.reverse;
 
 import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
 
-class ReverseTableImpl1 extends ReverseTableStrategy {
+public class ReverseTableImpl1 extends ReverseTableStrategy {
 
     final private static Logger log = Logger.getLogger(ReverseTableImpl1.class);
 
-    ReverseTableImpl1(ReverseTableDelegate dataSource) {
+    public ReverseTableImpl1(ReverseTableDelegate dataSource) {
         this.delegate = dataSource;
     }
 
     @Override
-    <T> T doReverse(Class<T> clazz) {
+    public <T> T doReverse(Class<T> clazz) {
         try {
 
             if (clazz == null) {

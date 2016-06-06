@@ -1,4 +1,4 @@
-package zfly.yfei.db;
+package zfly.yfei.db.core;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
@@ -12,7 +12,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import zfly.yfei.db.ReverseTableStrategy.ReverseTableDelegate;
+import zfly.yfei.db.condition.Where;
+import zfly.yfei.db.core.handler.YFeiDBSqlExecutorHandler;
+import zfly.yfei.db.model.Column;
+import zfly.yfei.db.sql.builder.*;
+import zfly.yfei.db.strategy.reflect.ReflectTableObserver;
+import zfly.yfei.db.strategy.reverse.ReverseTableDelegate;
+import zfly.yfei.db.strategy.reverse.ReverseTableStrategy;
+import zfly.yfei.db.model.Table;
+import zfly.yfei.db.strategy.reflect.ReflectTableImpl1;
+import zfly.yfei.db.strategy.reverse.ReverseTableImpl1;
 
 /**
  * 简单JDBC封装，通过反射和注解的方式提供简易数据库操作
@@ -272,7 +281,7 @@ public class YFeiDB {
 	private void loadTableFromClass(final Class<?> clazz) {
 		// 生成表信息
 		final Table table = new Table();
-		new ReflectTableImpl1().addGotTableInfoObserver(new ReflectTableStrategy.ReflectTableObserver() {
+		new ReflectTableImpl1().addGotTableInfoObserver(new ReflectTableObserver() {
 
 			@Override
 			public void gotTableName(String tableName, Class<?> clazz) {

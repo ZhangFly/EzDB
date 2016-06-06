@@ -1,20 +1,23 @@
-package zfly.yfei.db;
+package zfly.yfei.db.sql.builder;
 
 import java.sql.SQLException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import zfly.yfei.db.model.Column;
+import zfly.yfei.db.model.Table;
+import zfly.yfei.db.condition.Condition;
 
-class SQLUpdateBuilder extends SQLBuilder {
+public class SQLUpdateBuilder extends SQLBuilder {
 
 	private static Logger log = Logger.getLogger(SQLUpdateBuilder.class);
 
-	SQLUpdateBuilder(Object entity, Table table, Where condition) {
-		super(entity, table, condition);
+	public SQLUpdateBuilder(Object entity, Table table, Condition... conditions) {
+		super(entity, table, conditions);
 	}
 
 	@Override
-	String getSql() throws SQLException {
+	public String getSql() throws SQLException {
 		try {
 			final StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE ");
@@ -32,7 +35,10 @@ class SQLUpdateBuilder extends SQLBuilder {
 				}
 			}
 			sql.delete(sql.length() - 1, sql.length());
-			sql.append(condition.getCondition(table));
+			for (Condition condition : conditions) {
+				sql.append(condition.getCondition(table));
+			}
+			sql.append(";");
 			return sql.toString();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			log.error(e.getMessage());

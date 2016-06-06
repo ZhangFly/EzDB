@@ -1,4 +1,4 @@
-package zfly.yfei.db;
+package zfly.yfei.db.core;
 
 public class YFeiConfig {
 

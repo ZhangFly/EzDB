@@ -1,8 +1,8 @@
 package unit;
 
 import model.Person;
-import zfly.yfei.db.YFeiConfig;
-import zfly.yfei.db.YFeiDB;
+import zfly.yfei.db.core.YFeiConfig;
+import zfly.yfei.db.core.YFeiDB;
 
 import java.sql.SQLException;
 

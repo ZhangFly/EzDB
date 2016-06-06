@@ -1,10 +1,11 @@
-package zfly.yfei.db;
+package zfly.yfei.db.condition;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import zfly.yfei.db.model.Column;
+import zfly.yfei.db.model.Table;
 
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
 
 /**
  * 查询条件生成类。支持 t 表名通配符；支持 $1,$2... 属性通配符；支持值通配符 $c。
@@ -20,17 +21,16 @@ import org.apache.log4j.Logger;
  * @author YFei
  *
  */
-public class Where {
-	final private static Logger log = Logger.getLogger(Where.class);
+public class Where extends Condition {
 
-	private String sql;
+	final private static Logger log = Logger.getLogger(Where.class);
 
 	/**
 	 * 构建一个空的限定条件
 	 *
 	 * @return where生成类
 	 */
-	static Where emptyWhere() {
+	public static Where emptyWhere() {
 		return new Where(null);
 	}
 
@@ -44,39 +44,17 @@ public class Where {
 	 *            限定条件参数
 	 */
 	public Where(final String fmt, final Object... args) {
-		sql = fmt == null ? "" : " WHERE " + fmt;
-		for (Object arg : args) {
-			sql = sql.replaceFirst("\\$c", "'" + arg + "'");
-		}
+		super(fmt,args);
 	}
 
-	String getCondition(final Table table) throws SQLException {
+	@Override
+	public String getCondition(final Table table) throws SQLException {
+		final String comm = parsePlaceholder(table);
+		return (StringUtils.isEmpty(comm) ? StringUtils.EMPTY : " WHERE ") + comm;
 
-		if (table == null) {
-
-			throw new SQLException("No enough info to make condition!!");
-		}
-
-		final String regex = "(t\\.)?\\$([0-9]+)|(t\\.)";
-		final String tableName = table.getName();
-		final Matcher macther = Pattern.compile(regex).matcher(sql);
-		while (macther.find()) {
-			if (macther.group(2) == null) {
-				sql = macther.replaceFirst(tableName + ".");
-			} else {
-				final int position = Integer.valueOf(macther.group(2));
-				if (position > table.getColumns().size() || position < 1) {
-					throw new SQLException("Placeholder was overflow!!");
-				}
-				final Column columnInfo = table.getColumns().get(position - 1);
-				sql = macther.replaceFirst(String.format("%s.%s", tableName, columnInfo.getName()));
-			}
-			macther.reset(sql);
-		}
-		return sql + ";";
 	}
 
-	static Where shortcutForId(final Object entity, final Table table) {
+	public static Where shortcutForId(final Object entity, final Table table) {
 		try {
 			final Column primaryKey = table.getPrimaryKey();
 			if (primaryKey == null) {
@@ -96,7 +74,7 @@ public class Where {
 		}
 	}
 
-	static Where shortcutForId(final int id, final Table table) {
+	public static Where shortcutForId(final int id, final Table table) {
 
 		if (table == null) {
 			return Where.emptyWhere();

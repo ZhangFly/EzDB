@@ -1,7 +1,7 @@
 package unit
 
 import model.Person
-import zfly.yfei.db.Where
+import zfly.yfei.db.condition.Where
 
 import java.sql.SQLException
 
@@ -18,7 +18,6 @@ class UpdateTest extends GroovyTestCase{
     public void tearDown() {
         TestUtils.MySQL.update(TestUtils.EXPECT_1);
         TestUtils.MySQL.update(TestUtils.EXPECT_2);
-        println "after test"
     }
 
     public void testUpdateFailure() {

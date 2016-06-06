@@ -1,4 +1,4 @@
-package zfly.yfei.db;
+package zfly.yfei.db.model;
 
 import java.lang.reflect.Field;
 
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author YFei
  */
-class Column {
+public class Column {
     private String name;
     private Field field;
 
@@ -17,28 +17,28 @@ class Column {
         this(null, null);
     }
 
-    Column(final String name, final Field field) {
+    public Column(final String name, final Field field) {
         this.name = name;
         this.field = field;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    Field getField() {
+    public Field getField() {
         return field;
     }
 
-    void setField(Field field) {
+    public void setField(Field field) {
         this.field = field;
     }
 
-    boolean equals(final Column column) {
+    public boolean equals(final Column column) {
         return column != null && StringUtils.equals(name, column.getName());
     }
 

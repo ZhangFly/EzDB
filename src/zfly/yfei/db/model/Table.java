@@ -1,4 +1,4 @@
-package zfly.yfei.db;
+package zfly.yfei.db.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,39 +8,39 @@ import java.util.List;
  *
  * @author YFei
  */
-class Table {
+public class Table {
 
     private String name;
     private Column primaryKey;
     private List<Column> columns = new ArrayList<>();
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    Column getPrimaryKey() {
+    public Column getPrimaryKey() {
         return primaryKey;
     }
 
-    void setPrimaryKey(Column primaryKey) {
+    public void setPrimaryKey(Column primaryKey) {
         this.primaryKey = primaryKey;
     }
 
-    void addColumn(Column column) {
+    public void addColumn(Column column) {
         if (!columns.contains(column)) {
             columns.add(column);
         }
     }
 
-    List<Column> getColumns() {
+    public List<Column> getColumns() {
         return columns;
     }
 
-    boolean isPrimaryKey(final Column column) {
+    public boolean isPrimaryKey(final Column column) {
         return primaryKey != null && primaryKey.equals(column);
     }
 

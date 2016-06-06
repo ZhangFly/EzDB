@@ -2,8 +2,8 @@ package model;
 
 import org.apache.commons.lang3.StringUtils;
 
-import zfly.yfei.db.YFeiColumn;
-import zfly.yfei.db.YFeiTable;
+import zfly.yfei.db.core.annotation.YFeiColumn;
+import zfly.yfei.db.core.annotation.YFeiTable;
 
 @YFeiTable("person")
 public class Person {
