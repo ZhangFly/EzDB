@@ -14,7 +14,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 import zfly.yfei.db.core.condition.Condition;
 import zfly.yfei.db.core.condition.Where;
-import zfly.yfei.db.core.handler.YFeiDBSqlExecutorHandler;
 import zfly.yfei.db.model.Column;
 import zfly.yfei.db.sql.builder.*;
 import zfly.yfei.db.strategy.reflect.ReflectTableObserver;
@@ -240,7 +239,7 @@ public class YFeiDB {
 		executeSQL(sqlBuilder, null);
 	}
 
-	private void executeSQL(final SQLBuilder sqlBuilder, final YFeiDBSqlExecutorHandler handler) throws SQLException {
+	private void executeSQL(final SQLBuilder sqlBuilder, final YFeiDBHandler handler) throws SQLException {
 		final String sql = sqlBuilder.getSql();
 		if (config.isShowSql()) {
 			log.info(sql);
