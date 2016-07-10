@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1945625306">
+  <component name="DataSourceManagerImpl" format="xml" hash="582764865">
     <data-source source="LOCAL" name="MySQL - YFeiDB_Test@localhost" uuid="40de5ae8-29ff-49b7-9000-dd93557c1d9d">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>

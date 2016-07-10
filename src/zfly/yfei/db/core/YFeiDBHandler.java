@@ -2,24 +2,25 @@ package zfly.yfei.db.core;
 
 import java.sql.ResultSet;
 
-import com.sun.istack.internal.Nullable;
 
-public abstract class YFeiDBHandler {
+@FunctionalInterface
+public interface YFeiDBHandler {
 
 	/**
-	 * 执行完成后回调该方法
+	 * 执行成功回调方法
 	 * 
-	 * @param result
+	 * @param result 查询结果集
 	 */
-	public void onSuccess(final ResultSet result) {
 
-	}
+	void onSuccess(final ResultSet result);
+
 
 	/**
-	 * 执行完成后回调该方法
+	 * 执行失败回调方法
 	 *
+	 * @param e 引起失败的异常
 	 */
-	public void onFailure() {
+	default void onFailure(final Exception e) {
 
 	}
 
