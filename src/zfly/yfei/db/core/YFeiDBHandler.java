@@ -1,10 +1,10 @@
-package zfly.yfei.db.core.handler;
+package zfly.yfei.db.core;
 
 import java.sql.ResultSet;
 
 import com.sun.istack.internal.Nullable;
 
-public abstract class YFeiDBSqlExecutorHandler {
+public abstract class YFeiDBHandler {
 
 	/**
 	 * 执行完成后回调该方法
