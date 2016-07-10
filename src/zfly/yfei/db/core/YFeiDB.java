@@ -134,20 +134,17 @@ public class YFeiDB {
 					try {
 						return result.getObject(columns.get(position).getName());
 					} catch (SQLException e) {
-						log.error("Column was not mathed Class.Field<" + columns.get(position).getName() + ">");
+						log.error("Column was not matched Class.Field<" + columns.get(position).getName() + ">");
 						return null;
 					}
 				}
 
 			});
 
-			try {
-				while (result.next()) {
-					resList.add(reverse.doReverse(clazz));
-				}
-			} catch (SQLException e) {
-				log.error(e.getMessage());
+			while (result.next()) {
+				resList.add(reverse.doReverse(clazz));
 			}
+
 		});
 
 		return resList;

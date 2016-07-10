@@ -44,6 +44,10 @@ public class Table {
         return primaryKey != null && primaryKey.equals(column);
     }
 
+    public boolean isCommonKey(final Column column) {
+        return !isPrimaryKey(column);
+    }
+
     @Override
     public String toString() {
         return String.format("{name=%s, primaryKey=%s, columns=%s}", name,

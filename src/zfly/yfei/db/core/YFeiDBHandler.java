@@ -1,6 +1,7 @@
 package zfly.yfei.db.core;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 @FunctionalInterface
@@ -12,7 +13,7 @@ public interface YFeiDBHandler {
 	 * @param result 查询结果集
 	 */
 
-	void onSuccess(final ResultSet result);
+	void onSuccess(final ResultSet result) throws SQLException;
 
 
 	/**
