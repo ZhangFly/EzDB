@@ -1,6 +1,7 @@
 package zfly.yfei.db.strategy.reflect;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 import zfly.yfei.db.core.annotation.YFeiTable;
@@ -17,17 +18,13 @@ public class ReflectTableImpl1 extends ReflectTableStrategy {
 
 		reflectTableName(clazz);
 
-		for (Field f : clazz.getDeclaredFields()) {
-			YFeiColumn additionInfo = null;
-			if (f.isAnnotationPresent(YFeiColumn.class)) {
-				additionInfo = f.getAnnotation(YFeiColumn.class);
-				if (additionInfo.ignore()) {
-					continue;
-				}
-			}
-			reflectPrimaryKey(additionInfo, f, clazz);
-			reflectColumnName(additionInfo, f, clazz);
-		}
+		Arrays.stream(clazz.getDeclaredFields())
+				.filter(field -> !(field.isAnnotationPresent(YFeiColumn.class) && field.getAnnotation(YFeiColumn.class).ignore()))
+				.forEach( field -> {
+					YFeiColumn additionInfo = field.getAnnotation(YFeiColumn.class);
+					reflectPrimaryKey(additionInfo, field, clazz);
+					reflectColumnName(additionInfo, field, clazz);
+		});
 	}
 
 	private void reflectTableName(final Class<?> clazz) {

@@ -70,11 +70,6 @@ public class YFeiDB {
 			throw new SQLException("Config must be not null!!");
 		}
 
-		/* 彩蛋一枚，致我最爱的小黄君，哈哈！！ */
-		if (StringUtils.equalsIgnoreCase("yfei", config.getDataBase())) {
-			log.info("call me 小黄君！！最爱小黄君！！");
-		}
-
 		/* 初始化SQL连接器 */
 		final YFeiDB db = new YFeiDB();
 		db.sqlExecutor = createSQLExecutor(config);
