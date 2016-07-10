@@ -7,7 +7,6 @@ import java.sql.Statement;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import zfly.yfei.db.core.handler.YFeiDBSqlExecutorHandler;
 import zfly.yfei.db.helper.SimpleConnectionPool;
 
 /**
@@ -48,9 +47,22 @@ public class YFeiSQLExecutor {
      * @param handler 执行成功后的服务方法
      * @throws SQLException
      */
-    public void doExecute(final String sql, final YFeiDBSqlExecutorHandler handler) throws SQLException {
+    public void doExecute(final String sql, final YFeiDBHandler handler) throws SQLException {
 
         final Connection conn = pool.request();
+
+//        final Statement stat = conn.createStatement();
+//        try (final ResultSet res = stat.executeQuery(sql)) {
+//            if (StringUtils.containsIgnoreCase(sql, "select")) {
+//                if (handler != null) {
+//                    handler.onSuccess(res);
+//                }
+//            } else {
+//                stat.execute(sql);
+//            }
+//            stat.close();
+//            pool.release(conn);
+//        }
 
         try {
             final Statement stat = conn.createStatement();
