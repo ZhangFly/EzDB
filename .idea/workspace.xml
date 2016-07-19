@@ -6,18 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5d0caa1-e4cf-4981-a1d7-e72982971554" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/YFeiDB.2.1.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/classes/artifacts/YFeiDB_jar/YFeiDB.jar" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/YFeiDB.iml" afterPath="$PROJECT_DIR$/EzDB.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/ez/db/core/annotation/YFeiColumn.java" afterPath="$PROJECT_DIR$/src/zfly/ez/db/core/annotation/EzColumn.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zfly/ez/db/core/annotation/YFeiTable.java" afterPath="$PROJECT_DIR$/src/zfly/ez/db/core/annotation/EzTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/YFeiDB_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/YFeiDB_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/unit/Person.java" afterPath="$PROJECT_DIR$/src/unit/Person.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zfly/ez/db/strategy/reflect/ReflectTableImpl1.java" afterPath="$PROJECT_DIR$/src/zfly/ez/db/strategy/reflect/ReflectTableImpl1.java" />
-    </list>
+    <list default="true" id="f5d0caa1-e4cf-4981-a1d7-e72982971554" name="Default" comment="" />
     <ignored path="YFeiDB.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/bin/" />
