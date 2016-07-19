@@ -2,13 +2,13 @@ package unit;
 
 import org.apache.commons.lang3.StringUtils;
 
-import zfly.ez.db.core.annotation.YFeiColumn;
-import zfly.ez.db.core.annotation.YFeiTable;
+import zfly.ez.db.core.annotation.EzColumn;
+import zfly.ez.db.core.annotation.EzTable;
 
-@YFeiTable("person")
+@EzTable("person")
 public class Person {
 
-	@YFeiColumn(primaryKey = true)
+	@EzColumn(primaryKey = true)
 	private int id = 1;
 
 	private String name = "SB";
@@ -17,10 +17,10 @@ public class Person {
 
 	private String sex = "Female";
 
-	@YFeiColumn(alias = "say")
+	@EzColumn(alias = "say")
 	private String intro = "SB*2";
 
-	@YFeiColumn(ignore = true)
+	@EzColumn(ignore = true)
 	private String unuse;
 
 	public int getId() {

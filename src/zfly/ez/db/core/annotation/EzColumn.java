@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface YFeiColumn {
+public @interface EzColumn {
 	/**
 	 * 设置数据库表字段别名，如果不设置将自动将属性名映射为表字段名
 	 * 

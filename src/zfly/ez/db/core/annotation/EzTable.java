@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface YFeiTable {
+public @interface EzTable {
 	/**
 	 * 为数据库表设置别名，如果不设置，自动将类别映射为数据库表名
 	 * 
