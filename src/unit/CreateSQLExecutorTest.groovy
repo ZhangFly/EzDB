@@ -1,8 +1,8 @@
 package unit
 
-import zfly.yfei.db.core.YFeiConfig
-import zfly.yfei.db.core.YFeiDB
-import zfly.yfei.db.core.YFeiSQLExecutor
+import zfly.ez.db.core.EzDBConfig
+import zfly.ez.db.core.EzDB
+import zfly.ez.db.core.EzSQLExecutor
 
 import java.sql.SQLException
 
@@ -13,18 +13,18 @@ import java.sql.SQLException
 class CreateSQLExecutorTest extends GroovyTestCase {
     void testCreateSQLExecutor() {
         shouldFail(SQLException) {
-            YFeiDB.createSQLExecutor(null);
+            EzDB.createSQLExecutor(null);
         }
         shouldFail(SQLException) {
-            YFeiDB.createSQLExecutor(new YFeiConfig());
+            EzDB.createSQLExecutor(new EzDBConfig());
         }
         shouldFail(SQLException) {
-            YFeiDB.createSQLExecutor(new YFeiConfig().setDataBase("MySQL"));
+            EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL"));
         }
         shouldFail(SQLException) {
-            YFeiDB.createSQLExecutor(new YFeiConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
+            EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
         }
-        final YFeiSQLExecutor executor = YFeiDB.createSQLExecutor(new YFeiConfig().setDataBase("MySQL")
+        final EzSQLExecutor executor = EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL")
                 .setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
                 .setPassWord("123456").setPoolSize(1).setShowSql(true));
         assertNotNull(executor)

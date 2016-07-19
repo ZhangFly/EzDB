@@ -1,7 +1,7 @@
 package unit;
 
-import zfly.yfei.db.core.YFeiConfig;
-import zfly.yfei.db.core.YFeiDB;
+import zfly.ez.db.core.EzDB;
+import zfly.ez.db.core.EzDBConfig;
 
 import java.sql.SQLException;
 
@@ -10,7 +10,7 @@ public class TestUtils {
 	public static Person EXPECT_1 = null;
 	public static Person EXPECT_2 = null;
 	final public static Person EXPECT_ARRAY[] = new Person[2];
-	public static YFeiDB MySQL = null;
+	public static EzDB MySQL = null;
 
 
 	static {
@@ -30,7 +30,7 @@ public class TestUtils {
 		EXPECT_ARRAY[1] = EXPECT_2;
 
 		try {
-			MySQL = YFeiDB.createDB(new YFeiConfig()
+			MySQL = EzDB.createDB(new EzDBConfig()
 					.setDataBase("MySQL")
 					.setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8")
 					.setUserName("root")

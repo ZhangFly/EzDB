@@ -1,7 +1,7 @@
 package unit
 
-import zfly.yfei.db.core.YFeiConfig
-import zfly.yfei.db.core.YFeiDB
+import zfly.ez.db.core.EzDBConfig
+import zfly.ez.db.core.EzDB
 
 import java.sql.SQLException
 
@@ -13,20 +13,20 @@ class CreateDBTest extends GroovyTestCase{
 
     void testCreateDB() {
         shouldFail(SQLException) {
-            YFeiDB.createDB(null);
+            EzDB.createDB(null);
         }
         shouldFail(SQLException) {
-            YFeiDB.createDB(new YFeiConfig());
+            EzDB.createDB(new EzDBConfig());
         }
         shouldFail(SQLException) {
-            YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL"));
+            EzDB.createDB(new EzDBConfig().setDataBase("MySQL"));
         }
         shouldFail(SQLException) {
-            YFeiDB.createDB(new YFeiConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
+            EzDB.createDB(new EzDBConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
         }
-        assertNotNull(YFeiDB.createDB(new YFeiConfig()
+        assertNotNull(EzDB.createDB(new EzDBConfig()
                 .setDataBase("MySQL")
-                .setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8")
+                .setUrl("jdbc:mysql://localhost:3306/EzDB_Test?characterEncoding=utf8")
                 .setUserName("root")
                 .setPassWord("123456")
                 .setPoolSize(1)
