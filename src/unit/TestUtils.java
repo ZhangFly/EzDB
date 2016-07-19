@@ -22,7 +22,7 @@ public class TestUtils {
 		EXPECT_1.setIntro("SB");
 		EXPECT_2 = new Person();
 		EXPECT_2.setId(2);
-		EXPECT_2.setName("YFei");
+		EXPECT_2.setName("Maxpup");
 		EXPECT_2.setAge(24);
 		EXPECT_2.setSex("Female");
 		EXPECT_2.setIntro("SB*1");
@@ -32,7 +32,7 @@ public class TestUtils {
 		try {
 			MySQL = EzDB.createDB(new EzDBConfig()
 					.setDataBase("MySQL")
-					.setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8")
+					.setUrl("jdbc:MySQL://localhost:3306/EzDB_Test?characterEncoding=utf8")
 					.setUserName("root")
 					.setPassWord("123456")
 					.setPoolSize(1)

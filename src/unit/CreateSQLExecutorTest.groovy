@@ -22,10 +22,10 @@ class CreateSQLExecutorTest extends GroovyTestCase {
             EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL"));
         }
         shouldFail(SQLException) {
-            EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
+            EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/EzDB_Test?characterEncoding=utf8");
         }
         final EzSQLExecutor executor = EzDB.createSQLExecutor(new EzDBConfig().setDataBase("MySQL")
-                .setUrl("jdbc:mysql://localhost:3306/YFeiDB_Test?characterEncoding=utf8").setUserName("root")
+                .setUrl("jdbc:mysql://localhost:3306/EzDB_Test?characterEncoding=utf8").setUserName("root")
                 .setPassWord("123456").setPoolSize(1).setShowSql(true));
         assertNotNull(executor)
     }

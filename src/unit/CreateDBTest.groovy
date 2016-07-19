@@ -22,7 +22,7 @@ class CreateDBTest extends GroovyTestCase{
             EzDB.createDB(new EzDBConfig().setDataBase("MySQL"));
         }
         shouldFail(SQLException) {
-            EzDB.createDB(new EzDBConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/YFeiDB_Test?characterEncoding=utf8");
+            EzDB.createDB(new EzDBConfig().setDataBase("MySQL")).setUrl("jdbc:MySQL://localhost:3306/EzDB_Test?characterEncoding=utf8");
         }
         assertNotNull(EzDB.createDB(new EzDBConfig()
                 .setDataBase("MySQL")

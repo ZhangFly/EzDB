@@ -51,19 +51,6 @@ public class EzSQLExecutor {
 
         final Connection conn = pool.request();
 
-//        final Statement stat = conn.createStatement();
-//        try (final ResultSet res = stat.executeQuery(sql)) {
-//            if (StringUtils.containsIgnoreCase(sql, "select")) {
-//                if (handler != null) {
-//                    handler.onSuccess(res);
-//                }
-//            } else {
-//                stat.execute(sql);
-//            }
-//            stat.close();
-//            pool.release(conn);
-//        }
-
         try(final Statement stat = conn.createStatement()) {
             if (StringUtils.containsIgnoreCase(sql, "select")) {
                 final ResultSet res = stat.executeQuery(sql);
@@ -75,22 +62,5 @@ public class EzSQLExecutor {
             }
             pool.release(conn);
         }
-
-//        try {
-//            final Statement stat = conn.createStatement();
-//            if (StringUtils.containsIgnoreCase(sql, "select")) {
-//                final ResultSet res = stat.executeQuery(sql);
-//                if (handler != null) {
-//                    handler.onSuccess(res);
-//                }
-//            } else {
-//                stat.execute(sql);
-//            }
-//            stat.close();
-//            pool.release(conn);
-//        } catch (SQLException e) {
-//            pool.release(conn);
-//            throw e;
-//        }
     }
 }
